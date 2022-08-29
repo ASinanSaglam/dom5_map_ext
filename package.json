@@ -1,0 +1,41 @@
+{
+  "publisher": "als251",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/asinansaglam/dom5_map_ext"
+  },
+  "name": "dom5map",
+  "displayName": "Dominions 5 map extension",
+  "description": "Map editor extension for Dominions 5",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+      "Snippets"
+  ],
+  "activationEvents": [
+    "onCommand:dom5map.helloWorld"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "languages": [
+      {
+          "id": "dom5map",
+          "aliases": [
+              "Dom5 map lang"
+          ],
+          "extensions": [
+              ".map"
+          ],
+          "configuration": "./dom5map-language-configuration.json"
+      }
+    ],
+    "snippets": [
+      {
+          "language": "dom5map",
+          "path": "./snippets/dom5map-snippets.json"
+      }
+    ]
+  }
+}

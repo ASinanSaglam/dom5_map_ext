@@ -1,0 +1,928 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "BioNetGen Language",
+	"scopeName": "source.bngl",
+	"patterns": [
+		{
+			"include": "#model"
+		},
+		{
+			"include": "#actions"
+		},
+		{
+			"include": "#blocks"
+		},
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#strings"
+		}
+	],
+	"repository": {
+		"model": {
+			"patterns": [{
+				"name": "entity.name.section.model.bngl",
+				"begin": "(begin)(\\s+)(model)(\\s*.*)\\n",
+				"beginCaptures": {
+					"1": { "name": "entity.name.section.model.begin.bngl", "patterns": [{"include": "#block_tag_mod"}] },
+					"3": { "name": "entity.name.section.model.name.bngl", "patterns": [{"include": "#block_tag_name"}]},
+					"4": { "name": "entity.name.section.model.comment.bngl", "patterns": [{"include": "#comments"}]}
+				},
+				"end": "(end)(\\s+)(model)(\\s*.*)\\n",
+				"endCaptures": {
+					"1": { "name": "entity.name.section.model.end.bngl", "patterns": [{"include": "#block_tag_mod"}] },
+					"3": { "name": "entity.name.section.model.name.bngl", "patterns": [{"include": "#block_tag_name"}]},
+					"4": { "name": "entity.name.section.model.comment.bngl", "patterns": [{"include": "#comments"}]}
+				},
+				"patterns": [{
+					"include": "#blocks"
+				},
+				{
+					"include": "#comments"
+				}]
+			}]
+		},
+		"blocks": {
+			"patterns": [{
+				"name": "entity.name.section.parameters.bngl",
+				"begin": "\\s*(begin)(\\s+)(parameters)(\\s*.*)\\n",
+				"beginCaptures": {
+					"1": { "name": "entity.name.section.model.begin.bngl", "patterns": [{"include": "#block_tag_mod"}] },
+					"3": { "name": "entity.name.section.model.name.bngl", "patterns": [{"include": "#block_tag_name"}]},
+					"4": { "name": "entity.name.section.model.comment.bngl", "patterns": [{"include": "#comments"}]}
+				},
+				"end": "\\s*(end)(\\s+)(parameters)(\\s*.*)\\n",
+				"endCaptures": {
+					"1": { "name": "entity.name.section.model.end.bngl", "patterns": [{"include": "#block_tag_mod"}] },
+					"3": { "name": "entity.name.section.model.name.bngl", "patterns": [{"include": "#block_tag_name"}]},
+					"4": { "name": "entity.name.section.model.comment.bngl", "patterns": [{"include": "#comments"}]}
+				},
+				"patterns": [
+					{
+						"include": "#comments"
+					},
+					{
+						"include": "#param_line"
+					},
+					{
+						"include": "#line-continuation"
+					}]
+			},
+			{
+				"name": "entity.name.section.compartments.bngl",
+				"begin": "\\s*(begin)(\\s+)(compartments)(\\s*.*)\\n",
+				"beginCaptures": {
+					"1": { "name": "entity.name.section.model.begin.bngl", "patterns": [{"include": "#block_tag_mod"}] },
+					"3": { "name": "entity.name.section.model.name.bngl", "patterns": [{"include": "#block_tag_name"}]},
+					"4": { "name": "entity.name.section.model.comment.bngl", "patterns": [{"include": "#comments"}]}
+				},
+				"end": "\\s*(end)(\\s+)(compartments)(\\s*.*)\\n",
+				"endCaptures": {
+					"1": { "name": "entity.name.section.model.end.bngl", "patterns": [{"include": "#block_tag_mod"}] },
+					"3": { "name": "entity.name.section.model.name.bngl", "patterns": [{"include": "#block_tag_name"}]},
+					"4": { "name": "entity.name.section.model.comment.bngl", "patterns": [{"include": "#comments"}]}
+				},
+				"patterns": [{
+					"include": "#comments"
+				},
+				{
+					"include": "#compartment_line"
+				}]
+			},
+			{
+				"name": "entity.name.section.moleculetypes.bngl",
+				"begin": "\\s*(begin)(\\s+)(molecule\\s+types)(\\s*.*)\\n",
+				"beginCaptures": {
+					"1": { "name": "entity.name.section.model.begin.bngl", "patterns": [{"include": "#block_tag_mod"}] },
+					"3": { "name": "entity.name.section.model.name.bngl", "patterns": [{"include": "#block_tag_name"}]},
+					"4": { "name": "entity.name.section.model.comment.bngl", "patterns": [{"include": "#comments"}]}
+				},
+				"end": "\\s*(end)(\\s+)(molecule\\s+types)(\\s*.*)\\n",
+				"endCaptures": {
+					"1": { "name": "entity.name.section.model.end.bngl", "patterns": [{"include": "#block_tag_mod"}] },
+					"3": { "name": "entity.name.section.model.name.bngl", "patterns": [{"include": "#block_tag_name"}]},
+					"4": { "name": "entity.name.section.model.comment.bngl", "patterns": [{"include": "#comments"}]}
+				},
+				"patterns": [
+				{
+					"include": "#moltype_line"
+				},
+				{
+					"include": "#comments"
+				}]
+			},
+			{
+				"name": "entity.name.section.rules.bngl",
+				"begin": "\\s*(begin)(\\s+)(reaction\\s+rules)(\\s*.*)\\n",
+				"beginCaptures": {
+					"1": { "name": "entity.name.section.model.begin.bngl", "patterns": [{"include": "#block_tag_mod"}] },
+					"3": { "name": "entity.name.section.model.name.bngl", "patterns": [{"include": "#block_tag_name"}]},
+					"4": { "name": "entity.name.section.model.comment.bngl", "patterns": [{"include": "#comments"}]}
+				},
+				"end": "\\s*(end)(\\s+)(reaction\\s+rules)(\\s*.*)\\n",
+				"endCaptures": {
+					"1": { "name": "entity.name.section.model.end.bngl", "patterns": [{"include": "#block_tag_mod"}] },
+					"3": { "name": "entity.name.section.model.name.bngl", "patterns": [{"include": "#block_tag_name"}]},
+					"4": { "name": "entity.name.section.model.comment.bngl", "patterns": [{"include": "#comments"}]}
+				},
+				"patterns": [{
+					"include": "#comments"
+				},
+				{
+					"include": "#rule_line"
+				}]
+			},
+			{
+				"name": "entity.name.section.functions.bngl",
+				"begin": "\\s*(begin)(\\s+)(functions)(\\s*.*)\\n",
+				"beginCaptures": {
+					"1": { "name": "entity.name.section.model.begin.bngl", "patterns": [{"include": "#block_tag_mod"}] },
+					"3": { "name": "entity.name.section.model.name.bngl", "patterns": [{"include": "#block_tag_name"}]},
+					"4": { "name": "entity.name.section.model.comment.bngl", "patterns": [{"include": "#comments"}]}
+				},
+				"end": "\\s*(end)(\\s+)(functions)(\\s*.*)\\n",
+				"endCaptures": {
+					"1": { "name": "entity.name.section.model.end.bngl", "patterns": [{"include": "#block_tag_mod"}] },
+					"3": { "name": "entity.name.section.model.name.bngl", "patterns": [{"include": "#block_tag_name"}]},
+					"4": { "name": "entity.name.section.model.comment.bngl", "patterns": [{"include": "#comments"}]}
+				},
+				"patterns": [{
+					"include": "#comments"
+				},
+				{
+					"include": "#func_line"
+				}]
+			},
+			{
+				"name": "entity.name.section.species.bngl",
+				"begin": "\\s*(begin)(\\s+)(species)(\\s*.*)\\n",
+				"beginCaptures": {
+					"1": { "name": "entity.name.section.model.begin.bngl", "patterns": [{"include": "#block_tag_mod"}] },
+					"3": { "name": "entity.name.section.model.name.bngl", "patterns": [{"include": "#block_tag_name"}]},
+					"4": { "name": "entity.name.section.model.comment.bngl", "patterns": [{"include": "#comments"}]}
+				},
+				"end": "\\s*(end)(\\s+)(species)(\\s*.*)\\n",
+				"endCaptures": {
+					"1": { "name": "entity.name.section.model.end.bngl", "patterns": [{"include": "#block_tag_mod"}] },
+					"3": { "name": "entity.name.section.model.name.bngl", "patterns": [{"include": "#block_tag_name"}]},
+					"4": { "name": "entity.name.section.model.comment.bngl", "patterns": [{"include": "#comments"}]}
+				},
+				"patterns": [{
+					"include": "#comments"
+				},
+				{
+					"include": "#species_line"
+				}]
+			},
+			{
+				"name": "entity.name.section.species.bngl",
+				"begin": "\\s*(begin)(\\s+)(seed\\s+species)(\\s*.*)\\n",
+				"beginCaptures": {
+					"1": { "name": "entity.name.section.model.begin.bngl", "patterns": [{"include": "#block_tag_mod"}] },
+					"3": { "name": "entity.name.section.model.name.bngl", "patterns": [{"include": "#block_tag_name"}]},
+					"4": { "name": "entity.name.section.model.comment.bngl", "patterns": [{"include": "#comments"}]}
+				},
+				"end": "\\s*(end)(\\s+)(seed\\s+species)(\\s*.*)\\n",
+				"endCaptures": {
+					"1": { "name": "entity.name.section.model.end.bngl", "patterns": [{"include": "#block_tag_mod"}] },
+					"3": { "name": "entity.name.section.model.name.bngl", "patterns": [{"include": "#block_tag_name"}]},
+					"4": { "name": "entity.name.section.model.comment.bngl", "patterns": [{"include": "#comments"}]}
+				},
+				"patterns": [{
+					"include": "#comments"
+				},
+				{
+					"include": "#species_line"
+				}]
+			},
+			{
+				"name": "entity.name.section.observables.bngl",
+				"begin": "\\s*(begin)(\\s+)(observables)(\\s*.*)\\n",
+				"beginCaptures": {
+					"1": { "name": "entity.name.section.model.begin.bngl", "patterns": [{"include": "#block_tag_mod"}] },
+					"3": { "name": "entity.name.section.model.name.bngl", "patterns": [{"include": "#block_tag_name"}]},
+					"4": { "name": "entity.name.section.model.comment.bngl", "patterns": [{"include": "#comments"}]}
+				},
+				"end": "\\s*(end)(\\s+)(observables)(\\s*.*)\\n",
+				"endCaptures": {
+					"1": { "name": "entity.name.section.model.end.bngl", "patterns": [{"include": "#block_tag_mod"}] },
+					"3": { "name": "entity.name.section.model.name.bngl", "patterns": [{"include": "#block_tag_name"}]},
+					"4": { "name": "entity.name.section.model.comment.bngl", "patterns": [{"include": "#comments"}]}
+				},
+				"patterns": [{
+					"include": "#comments"
+				},
+				{
+					"include": "#obs_line"
+				}]
+			},
+			{
+				"name": "entity.name.section.reactions.bngl",
+				"begin": "\\s*(begin)(\\s+)(reactions)(\\s*.*)\\n",
+				"beginCaptures": {
+					"1": { "name": "entity.name.section.model.begin.bngl", "patterns": [{"include": "#block_tag_mod"}] },
+					"3": { "name": "entity.name.section.model.name.bngl", "patterns": [{"include": "#block_tag_name"}]},
+					"4": { "name": "entity.name.section.model.comment.bngl", "patterns": [{"include": "#comments"}]}
+				},
+				"end": "\\s*(end)(\\s+)(reactions)(\\s*.*)\\n",
+				"endCaptures": {
+					"1": { "name": "entity.name.section.model.end.bngl", "patterns": [{"include": "#block_tag_mod"}] },
+					"3": { "name": "entity.name.section.model.name.bngl", "patterns": [{"include": "#block_tag_name"}]},
+					"4": { "name": "entity.name.section.model.comment.bngl", "patterns": [{"include": "#comments"}]}
+				},
+				"patterns": [{
+					"include": "#comments"
+				},
+				{
+					"include": "#net_reaction_line"
+				}]
+			},
+			{
+				"name": "entity.name.section.groups.bngl",
+				"begin": "\\s*(begin)(\\s+)(groups)(\\s*.*)\\n",
+				"beginCaptures": {
+					"1": { "name": "entity.name.section.model.begin.bngl", "patterns": [{"include": "#block_tag_mod"}] },
+					"3": { "name": "entity.name.section.model.name.bngl", "patterns": [{"include": "#block_tag_name"}]},
+					"4": { "name": "entity.name.section.model.comment.bngl", "patterns": [{"include": "#comments"}]}
+				},
+				"end": "\\s*(end)(\\s+)(groups)(\\s*.*)\\n",
+				"endCaptures": {
+					"1": { "name": "entity.name.section.model.end.bngl", "patterns": [{"include": "#block_tag_mod"}] },
+					"3": { "name": "entity.name.section.model.name.bngl", "patterns": [{"include": "#block_tag_name"}]},
+					"4": { "name": "entity.name.section.model.comment.bngl", "patterns": [{"include": "#comments"}]}
+				},
+				"patterns": [{
+					"include": "#comments"
+				},
+				{
+					"include": "#net_group_line"
+				}]
+			},
+			{
+				"name": "entity.name.section.population_maps.bngl",
+				"begin": "\\s*(begin)(\\s+)(population\\s+maps)(\\s*.*)\\n",
+				"beginCaptures": {
+					"1": { "name": "entity.name.section.model.begin.bngl", "patterns": [{"include": "#block_tag_mod"}] },
+					"3": { "name": "entity.name.section.model.name.bngl", "patterns": [{"include": "#block_tag_name"}]},
+					"4": { "name": "entity.name.section.model.comment.bngl", "patterns": [{"include": "#comments"}]}
+				},
+				"end": "\\s*(end)(\\s+)(population\\s+maps)(\\s*.*)\\n",
+				"endCaptures": {
+					"1": { "name": "entity.name.section.model.end.bngl", "patterns": [{"include": "#block_tag_mod"}] },
+					"3": { "name": "entity.name.section.model.name.bngl", "patterns": [{"include": "#block_tag_name"}]},
+					"4": { "name": "entity.name.section.model.comment.bngl", "patterns": [{"include": "#comments"}]}
+				},
+				"patterns": [
+					{
+						"include": "#comments"
+					},
+					{
+						"include": "#populationmap_line"
+					}]
+			},
+			{
+				"name": "entity.name.section.energy_patterns.bngl",
+				"begin": "\\s*(begin)(\\s+)(energy\\s+patterns)(\\s*.*)\\n",
+				"beginCaptures": {
+					"1": { "name": "entity.name.section.model.begin.bngl", "patterns": [{"include": "#block_tag_mod"}] },
+					"3": { "name": "entity.name.section.model.name.bngl", "patterns": [{"include": "#block_tag_name"}]},
+					"4": { "name": "entity.name.section.model.comment.bngl", "patterns": [{"include": "#comments"}]}
+				},
+				"end": "\\s*(end)(\\s+)(energy\\s+patterns)(\\s*.*)\\n",
+				"endCaptures": {
+					"1": { "name": "entity.name.section.model.end.bngl", "patterns": [{"include": "#block_tag_mod"}] },
+					"3": { "name": "entity.name.section.model.name.bngl", "patterns": [{"include": "#block_tag_name"}]},
+					"4": { "name": "entity.name.section.model.comment.bngl", "patterns": [{"include": "#comments"}]}
+				},
+				"patterns": [
+					{
+						"include": "#comments"
+					},
+					{
+						"include": "#energypattern_line"
+					}]
+			}]
+		},
+		"actions": {
+			"patterns": [{
+				"name": "entity.name.function.action.curly.bngl",
+				"match": "^\\s*(generate_network|generate_hybrid_model|simulate|simulate_ode|simulate_ssa|simulate_pla|simulate_nf|parameter_scan|bifurcate|readFile|writeFile|writeModel|writeNetwork|writeXML|writeSBML|writeMfile|writeMexfile|writeMDL|visualize)(\\()(\\{[^\\n|\\#|\\}]+\\})?(\\))",
+			    "captures": {
+					"1": { "name": "meta.action.name.bngl" },
+					"2": { "name": "punctuation.action.arguments.begin_paran.bngl" },
+					"3": { "name": "meta.action.arguments.curlygroup.bngl", "patterns": [{ "include": "#action_argument_group_curly"}] },
+					"4": { "name": "punctuation.action.arguments.end_paran.bngl"}
+				}
+			},
+			{
+				"name": "entity.name.function.action.nocurly.bngl",
+				"match": "^\\s*(setConcentration|addConcentration|saveConcentrations|resetConcentrations|setParameter|saveParameters|resetParameters|quit|setModelName|substanceUnits|version|setOption)(\\()([^\\n|\\#|\\}]+)?(\\))",
+				"captures": {
+					"1": { "name": "meta.action.name.bngl" },
+					"2": { "name": "punctuation.action.arguments.begin_paran.bngl" },
+					"3": { "name": "meta.action.arguments.noncurlygroup.bngl", "patterns": [{ "include": "#action_argument_group_nocurly"}] },
+					"4": { "name": "punctuation.action.arguments.end_paran.bngl"}
+				}
+			},
+			{
+				"include": "#comments"
+			}]
+		},
+		"action_argument_group_curly": {
+			"patterns": [{
+				"match": "(\\{)([^\\n|\\#|\\}]+)(\\})",
+				"captures": {
+					"1": { "name": "punctuation.action.arguments.begin_brace.bngl"},
+					"2": { "name": "meta.action.arguments.bngl", "patterns": [{ "include": "#action_arguments"}] },
+					"3": { "name": "punctuation.action.arguments.end_brace.bngl"}
+				}
+			}]
+		},
+		"action_argument_group_nocurly": {
+			"patterns": [{
+				"match": "([^\\n|\\#|\\}]+)",
+				"captures": {
+					"1": { "name": "meta.action.arguments.bngl", "patterns": [{ "include": "#action_arguments"}] }
+				}
+			}]
+		},
+		"net_group_line": {
+			"patterns": [{
+				"match": "\\s*([0-9]+)\\s+([A-Za-z0-9_]+)\\s+([^\\n|\\#]+)",
+				"captures": {
+					"1": { "name": "meta.group.id.bngl" },
+					"2": { "name": "storage.type.group_name.bngl" },
+					"3": { "name": "variable.parameter.group.definition" }
+				}
+			},
+			{
+				"include": "#comments"
+			}]
+		},
+		"net_reaction_line": {
+			"patterns": [{
+				"begin": "\\s*([0-9]+)\\s+([0-9,]+)\\s+([0-9,]+)\\s+",
+				"beginCaptures": {
+					"1": { "name": "constant.language.line_label.bngl" },
+					"2": { "name": "variable.parameter.reaction.reactants.bngl" },
+					"3": { "name": "variable.parameter.reaction.products.bngl" }
+				},
+				"end": "(?=\\#|\\n)",
+				"patterns": [{
+					"include": "#expressions"
+				}]
+			},
+			{
+				"include": "#comments"
+			}]
+		},
+		"action_arguments": {
+			"patterns": [{
+				"match": "([^\\n|\\#|\\=|\\>|\\,]+)(\\=\\>)([^\\n|\\#|\\=|\\>|\\,]+)",
+				"captures": {
+					"1": { "name": "storage.type.action_argument.argument_name.bngl" },
+					"2": { "name": "keyword.control.action_argument.assign.bngl" },
+					"3": { "name": "variable.parameter.action_argument.argument_value.bngl" }
+				}
+			},
+			{
+				"match": "\\,",
+				"name": "keyword.control.action_argument.sep.bngl"
+			}]
+		},
+		"param_line": {
+			"name": "meta.parameter.line.bngl",
+			"patterns": [{
+				"begin": "^\\s*([0-9]+\\s+|[A-Za-z_][A-Za-z0-9_]*\\s*\\:)?\\s*([A-Za-z_][A-Za-z0-9_]*)\\s*(\\=)?\\s*",
+				"beginCaptures": {
+					"1": { "name": "constant.language.line_label.bngl", "patterns": [{"name": "test.colon","match": "\\:"}] },
+					"2": { "name": "name", "patterns": [{ "include": "#names" }] },
+					"3": { "name": "equal" }
+				},
+				"end": "\\s*(?=\\#|((?<!\\\\)\\n))",
+				"patterns": [{
+					"name": "meta.parameter.expression.bngl",
+					"patterns": [{
+						"include": "#expressions"
+					}]
+				}]
+			},
+			{
+				"include": "#line-continuation"
+			}]
+		},
+		"moltype_line": {
+			"patterns": [{
+				"contentName": "meta.moleculetype.line.bngl",
+				"begin": "^\\s*([0-9]+\\s+|[A-Za-z_][A-Za-z0-9_]*\\s*\\:)?\\s*(?=[A-Za-z])",
+				"beginCaptures": {
+					"1": { "name": "constant.language.line_label.bngl", "patterns": [{"name": "test.colon","match": "\\:"}] }
+				},
+				"end": "\\s*(?=\\#|((?<!\\\\)\\n))",
+				"patterns": [{
+					"patterns": [{
+						"include": "#moltype"
+					}]
+				}]
+			}]
+		},
+		"compartment_line": {
+			"name": "meta.compartment.line.bngl",
+			"patterns": [{
+				"begin": "^\\s*([0-9]+\\s+|[A-Za-z_][A-Za-z0-9_]*\\s*\\:)?\\s*([A-Za-z][A-Za-z0-9_]*)\\s+([2|3])\\s+",
+				"beginCaptures": {
+					"1": { "name": "constant.language.line_label.bngl", "patterns": [{"name": "test.colon","match": "\\:"}] },
+					"2": { "name": "meta.compartment.name.bngl", "patterns": [{ "include": "#names"}] },
+					"3": { "name": "meta.compartment.dimensionality.bngl", "patterns": [{ "include": "#constants"}] }
+				},
+				"end": "(\\s[A-Za-z][A-Za-z0-9_]*)?\\s*(?=\\#|((?<!\\\\)\\n))",
+				"endCaptures": {
+					"1": { "name": "meta.compartment.parent.bngl", "patterns": [{ "include": "#names" }]}
+				},
+				"patterns": [{
+					"include": "#expressions"
+				}]
+			}]
+		},
+		"func_line": {
+			"name": "meta.function.line.bngl",
+			"patterns": [{
+				"begin": "^\\s*([0-9]+\\s+|[A-Za-z_][A-Za-z0-9_]*\\s*\\:)?\\s*([A-Za-z][A-Za-z0-9_]*)(\\([^\\n|\\#|\\)]*\\))?\\s*(\\s+|\\=)\\s*",
+				"beginCaptures": {
+					"1": { "name": "constant.language.line_label.bngl", "patterns": [{"name": "test.colon","match": "\\:"}] },
+					"2": { "name": "meta.function.name.bngl", "patterns": [{ "include": "#names"}] },
+					"3": { "name": "meta.function.arguments.bngl", "patterns": [{ "include": "#func_args"}]},
+					"4": { "name": "meta.function.define_sym.bngl", "patterns": [{ "include": "#constants"}] }
+				},
+				"end": "(?=\\#|((?<!\\\\)\\n))",
+				"contentName": "function.def",
+				"patterns": [{
+					"include": "#expressions"
+				}]
+			}]
+		},
+		"func_args": {
+			"patterns": [{
+				"match": "([^\\n|\\#|\\,|\\(|\\)|\\s]+)",
+				"captures": {
+					"1": { "name": "variable.language.function.argument.bngl" }
+				}
+			},
+			{
+				"match": "\\,",
+				"name": "keyword.operator.function.bngl"
+			}]
+		},
+		"species_line": {
+			"name": "meta.species.line.bngl",
+			"patterns": [{
+				"match": "^\\s*([0-9]+\\s+|[A-Za-z_][A-Za-z0-9_]*\\s*\\:)?\\s*(?=[A-Za-z]|\\%|\\@|\\$|\\{MatchOnce\\})([^\\n|\\#]+)(?<=\\)|\\@[A-Za-z][A-Za-z0-9_]*|\\%[A-Za-z0-9][A-Za-z0-9_]*)\\s+([^\\n|\\#]+)\\s*(?=\\n|\\#)",
+				"captures": {
+					"1": { "name": "constant.language.line_label.bngl", "patterns": [{"name": "test.colon","match": "\\:"}] },
+					"2": { "name": "meta.species.pattern.bngl", "patterns": [{ "include": "#species_base" }] },
+					"3": { "name": "meta.species.amount.bngl", "patterns": [{ "include": "#expressions"}] }
+				}
+			},
+			{
+				"include": "#comments"
+			}]
+		},
+		"obs_line": {
+			"patterns": [{
+				"begin": "^\\s*([0-9]+\\s+|[A-Za-z_][A-Za-z0-9_]*\\s*\\:)?\\s*(Molecules|Species)\\s+([A-Za-z][A-Za-z0-9_]*)\\s+",
+				"beginCaptures": {
+					"1": { "name": "constant.language.line_label.bngl", "patterns": [{"name": "test.colon","match": "\\:"}] },
+					"2": { "name": "meta.observable.type.bngl", "patterns": [{ "include": "#obs_kwords"}] },
+					"3": { "name": "meta.observable.name.bngl", "patterns": [{ "include": "#names"}] }
+				},
+				"end": "\\s*(?=\\#|\\n)",
+				"patterns": [{
+					"begin": "([^\\#|\\n]+)",
+					"beginCaptures": {
+						"1": { "name": "meta.observable.pattern", "patterns": [{ "include": "#multi_species" }] }
+					},
+					"end": "(?=\\#|\\n)"
+				}]
+			}]
+		},
+		"energypattern_line": {
+			"patterns": [{
+				"begin": "^\\s*([0-9]+\\s+|[A-Za-z_][A-Za-z0-9_]*\\s*\\:)?\\s*(?=[A-Za-z]|\\%|\\@)([^\\n|\\#|\\s]+)\\s+",
+				"beginCaptures": {
+					"1": { "name": "constant.language.line_label.bngl", "patterns": [{"name": "test.colon","match": "\\:"}] },
+					"2": { "name": "meta.species.pattern.bngl", "patterns": [{ "include": "#species_base" }] }
+				},
+				"end": "(?=\\#|\\n)",
+				"patterns": [{
+					"include": "#expressions"
+				}]
+			},
+			{
+				"include": "#comments"
+			}]
+		},
+		"populationmap_line": {
+			"patterns": [{
+				"begin": "^\\s*([0-9]+\\s+|[A-Za-z_][A-Za-z0-9_]*\\s*\\:)?\\s*(?=[A-Za-z]|\\%|\\@)([^\\n|\\#]+)\\s*(\\-\\>)\\s*([^\\n|\\#|\\s]+)\\s+",
+				"beginCaptures": {
+					"1": { "name": "constant.language.line_label.bngl", "patterns": [{"name": "test.colon","match": "\\:"}] },
+					"2": { "name": "meta.species.pattern.bngl", "patterns": [{ "include": "#species_base" }] },
+					"3": { "name": "keyword.control.popmap.dir.bngl" },
+					"4": { "name": "simple_molecule", "patterns": [{ "include": "#species_base" }] }
+				},
+				"end": "\\s*(\\s(DeleteMolecules|MoveConnected|TotalRate|exclude_rectants\\(.*\\)|include_reactants\\(.*\\)|exclude_products\\(.*\\)|include_products\\(.*\\)))?\\s*(?=\\#|\\n)",
+				"endCaptures": {
+					"1": { "name": "rule_modifier", "patterns": [{ "include": "#rule_modifier"}] }
+				},
+				"patterns": [{
+						"include": "#rate_laws"
+					}]
+			},
+			{
+				"include": "#comments"
+			}]
+		},
+		"rule_modifier": {
+			"patterns": [{
+				"match": "(DeleteMolecules|MoveConnected|TotalRate|exclude_rectants|include_reactants|exclude_products|include_products)",
+				"captures": {
+					"1": { "name": "keyword.control.rule_mod.bngl" }
+				}
+			},
+			{
+				"match": "\\((.*)\\)",
+				"captures": {
+					"1": { "name": "meta.rule_mods.arguments.bngl", "patterns": [{ "include": "#expressions" }]}
+				}
+			}]
+		},
+		"rate_laws": {
+			"patterns": [{
+				"match": "(Sat|MM|Hill|Arrhenius)",
+				"captures": {
+					"1": { "name": "keyword.control.special_rate_law.bngl" }
+				}
+			},
+			{
+				"include": "#expressions"
+			}]
+		},
+		"simple_molecule": {
+			"patterns": [{
+				"match": "[A-Za-z][A-Za-z0-9_]*(\\(\\))?(\\@[A-Za-z][A-Za-z0-9_]*)?(\\%[A-Za-z0-9][A-Za-z0-9_]*)?(\\(\\))?",
+				"captures": {
+					"1": { "name": "simple_molecule", "patterns": [{"include": "#species_base"}]}
+				}
+			}]
+		},
+		"multi_species": {
+			"patterns": [{
+				"match": "\\s*(([^\\n|\\#|\\s|\\,]|(?<!\\)\\,)|(?<!\\)\\@[A-Za-z][A-Za-z0-9_]*\\,)|(?<!\\)\\%[A-Za-z0-9][A-Za-z0-9_]*\\,)|(?<!\\<[0-9]+\\,)|(?<!\\>[0-9]+\\,)|(?<!\\=[0-9]+\\,))+)\\s*(\\,)?\\s*",
+				"captures": {
+					"1": { "name": "meta.species.multi_part.bngl", "patterns": [{ "include": "#species_pat" }] },
+					"3": { "name": "meta.species.pat_sep.bngl" }
+				}
+			}]
+		},
+		"species_base_all": {
+			"patterns": [{
+				"match": "\\s*(0)\\s*",
+				"captures": {
+					"1": { "name": "meta.species.null_pat.bngl" }
+				}
+			},
+			{
+				"match": "(.*)",
+				"captures": {
+					"1": { "name": "meta.species.non_null_pat.bngl", "patterns": [{ "include": "#species_base"}] }
+				}
+			}]
+		},
+		"species_all": {
+			"patterns": [{
+				"match": "\\s*(0)\\s*",
+				"captures": {
+					"1": { "name": "meta.species.null_pat.bngl" }
+				}
+			},
+			{
+				"match": "(.*)",
+				"captures": {
+					"1": { "name": "meta.species.non_null_pat.bngl", "patterns": [{ "include": "#species_pat"}] }
+				}
+			}]
+		},
+		"species_base": {
+			"patterns": [{
+				"match": "(\\@[A-Za-z][A-Za-z0-9_]*)?(\\%[A-Za-z0-9][A-Za-z0-9_]*)?(\\@[A-Za-z][A-Za-z0-9_]*)?(\\:|\\:\\:)?(\\$)?([^\\n|\\#|\\:|\\$|\\<|\\>|\\=]+)",
+				"captures": {
+					"1": { "name": "keyword.control.species.compartment.bngl", "patterns": [{"include": "#compartment"}] },
+					"2": { "name": "keyword.other.species.tag.bngl", "patterns": [{"include": "#tag"}] },
+					"3": { "name": "keyword.control.species.compartment.bngl", "patterns": [{"include": "#compartment"}] },
+					"4": { "name": "keyword.operator.species.total.bngl"},
+					"5": { "name": "constant.numeric.species.mod.bngl" },
+					"6": { "name": "meta.species.bngl", "patterns": [{ "include": "#species" }]}
+				}
+			}]
+		},
+		"species_pat": {
+			"patterns": [{
+				"match": "(\\@[A-Za-z][A-Za-z0-9_]*)?(\\%[A-Za-z0-9][A-Za-z0-9_]*)?(\\@[A-Za-z][A-Za-z0-9_]*)?(\\:|\\:\\:)?(\\$|\\{MatchOnce\\})?([^\\n|\\#|\\:|\\$|\\<|\\>|\\=]+)((\\<|\\<\\=|\\=\\=|\\>\\=|\\>)[0-9]+)?",
+				"captures": {
+					"1": { "name": "keyword.control.species.compartment.bngl", "patterns": [{"include": "#compartment"}] },
+					"2": { "name": "keyword.other.species.tag.bngl", "patterns": [{"include": "#tag"}] },
+					"3": { "name": "keyword.control.species.compartment.bngl", "patterns": [{"include": "#compartment"}] },
+					"4": { "name": "keyword.operator.species.total.bngl"},
+					"5": { "name": "constant.numeric.species.mod.bngl" },
+					"6": { "name": "meta.species.bngl", "patterns": [{ "include": "#species" }]},
+					"7": { "name": "constant.numeric.species.quantifier.bngl" }
+				}
+			}]
+		},
+		"species": {
+			"patterns": [{
+				"match": "([^\\n|\\#|\\.]+)",
+				"captures": {
+					"1": { "name": "meta.molecule.bngl", "patterns": [{ "include": "#molecule_pat"}] }
+				}
+			},
+			{
+				"match": "\\.",
+				"name": "keyword.control.species.separator.bngl"
+			}]
+		},
+		"molecule_pat": {
+			"name": "molecule",
+			"patterns": [{
+				"match": "([A-Za-z][A-Za-z0-9_]*)?(\\()?([^\\n|\\#|\\.|\\@|\\(|\\)]+)?(\\))?(\\%[A-Za-z0-9][A-Za-z0-9_]*)?(\\@[A-Za-z][A-Za-z0-9_]*)?",
+				"captures": {
+					"1": { "name": "meta.molecule.name.bngl"},
+					"3": { "name": "meta.molecule.components.bngl", "patterns": [{ "include": "#components" }] },
+					"5": { "name": "meta.molecule.tag.bngl", "patterns": [{ "include": "#tag" }] },
+					"6": { "name": "meta.molecule.compartment.bngl", "patterns": [{ "include": "#compartment" }] }
+				}
+			},
+			{
+				"match": "([A-Za-z][A-Za-z0-9_]*)?(\\%[A-Za-z0-9][A-Za-z0-9_]*)?(\\@[A-Za-z][A-Za-z0-9_]*)?(\\()?([^\\n|\\#|\\.|\\@|\\)(|\\)]+)?(\\))?",
+				"captures": {
+					"1": { "name": "meta.molecule.name.bngl", "patterns": [{ "include": "#names"}] },
+					"2": { "name": "meta.molecule.tag.bngl", "patterns": [{ "include": "#tag"}] },
+					"3": { "name": "meta.molecule.compartment.bngl", "patterns": [{ "include": "compartment"}] },
+					"5": { "name": "meta.molecule.components.bngl", "patterns": [{ "include": "#components" }] }
+				}
+			}
+			]
+		},
+		"components": {
+			"patterns": [{
+				"match": "([^\\n|\\#|\\,|\\(|\\)|\\s]+)",
+				"captures": {
+					"1": { "name": "meta.component.bngl", "patterns": [{ "include": "#component" }] }
+				}
+			},
+			{
+				"match": "\\,",
+				"name": "keyword.control.component.separator.bngl"
+			}
+			]
+		},
+		"component": {
+			"patterns": [{
+				"match": "([A-Za-z][A-Za-z0-9_]*)?(\\~\\?|\\~[A-Za-z0-9][A-Za-z0-9_]*)?(\\!\\?|\\!\\+|\\![0-9]+)?(\\%[A-Za-z0-9][A-Za-z0-9_]*)?",
+				"captures": {
+					"1": { "name": "meta.component.name.bngl" },
+					"2": { "name": "meta.component.state.bngl", "patterns": [{ "include": "#state" }] },
+					"3": { "name": "meta.component.bond.bngl", "patterns": [{ "include": "#bond" }] },
+					"4": { "name": "meta.component.tag.bngl", "patterns": [{ "include": "#tag" }] }
+				}
+			}]
+		},
+		"moltype": {
+			"patterns": [{
+				"begin": "([A-Za-z][A-Za-z0-9_]*)\\(",
+				"beginCaptures": {
+					"1": { "name": "meta.moleculetype.name.bngl" }
+				},
+				"end": "([^\\#]*)\\)",
+				"endCaptures": {
+					"1": { "name": "meta.moleculetype.specification.bngl", "patterns": [{ "include": "#component_type" }] }
+				}
+			}]
+		},
+		"component_type": {
+			"patterns": [
+			{
+				"match": "([^\\n|\\#|\\,|\\s]+)",
+				"captures": {
+					"1": { "name": "meta.component_type.component.bngl", "patterns": [{ "include": "#component" }] }
+				}
+			},
+			{
+				"name": "keyword.operator.mtype.bngl",
+				"match": "\\,"
+			}]
+		},
+		"rule_line": {
+			"name": "meta.rule.line.bngl",
+			"patterns": [{
+				"begin": "^\\s*([0-9]+\\s+|[A-Za-z_][A-Za-z0-9_]*\\s*\\:)?\\s*(?=[A-Za-z0]|\\@|\\%)([^\\n|\\#|\\<|\\-]+)\\s*(?=\\<|\\-)",
+				"beginCaptures": {
+					"1": { "name": "constant.language.line_label.bngl", "patterns": [{"name": "test.colon","match": "\\:"}] },
+					"2": { "name": "meta.rule.reactants.bngl", "patterns": [{ "include": "#reactants"}] }
+				},
+				"end": "(?=\\#|\\n)",
+				"patterns": [{
+					"include": "#reaction_rhs"
+				}]
+			}]
+		},
+		"reactants": {
+			"patterns": [{
+				"match": "\\s*(([^\\n|\\#|\\+|\\s]|(?<=\\!)\\+|\\s(?=([^\\+]|(?<=\\!)\\+)*\\)))+)\\s*",
+				"captures": {
+					"1": { "name": "meta.rule.reactant.bngl", "patterns": [{ "include": "#species_all"}] }
+				}
+			},
+			{
+				"match": "(?<!\\!)\\+",
+				"name": "keyword.control.rule.plus.bngl"
+			}]
+		},
+		"reaction_rhs": {
+			"name": "meta.rule.reaction_rhs.bngl",
+			"patterns": [{
+				"match": "\\s*(\\<\\-\\>)\\s*([^\\n|\\#]+)\\s+([^\\n|\\#]+\\,[^\\n|\\#]+)",
+				"captures": {
+					"1": { "name": "keyword.control.rule.bidir.bngl" },
+					"2": { "name": "meta.rule.bidir_prod.bngl", "patterns": [{ "include": "#products"}] },
+					"3": { "name": "meta.rule.bidir_rate.bngl", "patterns": [{ "include": "#bidir_rate"}] }
+				}
+			},
+			{
+				"match": "\\s*((?<!\\<)\\-\\>)\\s*([^\\n|\\#]+)\\s+([^\\n|\\#]+)",
+				"captures": {
+					"1": { "name": "keyword.control.rule.unidir.bngl" },
+					"2": { "name": "meta.rule.unidir_prod.bngl", "patterns": [{ "include": "#products"}] },
+					"3": { "name": "meta.rule.unidir_rate.bngl", "patterns": [{ "include": "#expressions"}] }
+				}
+			}]
+		},
+		"products": {
+			"patterns": [{
+				"match": "\\s*(([^\\n|\\#|\\+|\\s]|(?<=\\!)\\+|\\s(?=([^\\+]|(?<=\\!)\\+)*\\)))+)\\s*",
+				"captures": {
+					"1": { "name": "meta.rule.product.bngl", "patterns": [{ "include": "#species_all"}] }
+				}
+			},
+			{
+				"match": "\\+",
+				"name": "keyword.control.rule.plus.bngl"
+			}]
+		},
+		"bidir_rate": {
+			"patterns": [{
+				"match": "([^\\n|\\#|\\,]+)",
+				"captures": {
+					"1": { "name": "meta.rule.rate.bngl", "patterns": [{ "include": "#expressions"}] }
+				}
+			},
+			{
+				"match": "\\,",
+				"name": "keyword.control.rule.rate_sep.bngl" 
+			}]
+		},
+		"obs_kwords": {
+			"patterns": [{
+				"name": "variable.language.observable.type.bngl",
+				"match": "(Molecules|Species)"
+			}]
+		},
+		"line-label": {
+			"patterns": [{
+				"match": "^\\s*([0-9]+\\s+|[A-Za-z_][A-Za-z0-9_]*\\s*\\:)?\\s*",
+				"captures": {
+					"1": { "name": "constant.language.line_label.bngl", "patterns": [{"name": "test.colon","match": "\\:"}] } 
+				}
+			}]
+		},
+		"names": {
+			"name": "variable.name.bngl",
+			"match": "[A-Za-z_][A-Za-z0-9_]*"
+		},
+		"state": {
+			"patterns": [{
+				"match": "\\~",
+				"name": "constant.language.state.symbol.bngl"
+			},
+		    {
+				"match": "[^\\~]+",
+				"name": "variable.parameter.state.name.bngl"
+			}]
+		},
+		"bond": {
+			"patterns": [{
+				"match": "\\!",
+				"name": "constant.language.bond.symbol.bngl"
+			},
+		    {
+				"match": "[^\\!]+",
+				"name": "variable.parameter.bond.name.bngl"
+			}]
+		},
+		"tag": {
+			"patterns": [{
+				"match": "\\%",
+				"name": "constant.language.tag.symbol.bngl"
+			},
+		    {
+				"match": "[^\\%]+",
+				"name": "variable.parameter.tag.name.bngl"
+			}]
+		},
+		"compartment": {
+			"patterns": [{
+				"match": "\\@",
+				"name": "constant.language.compartment.symbol.bngl"
+			},
+		    {
+				"match": "[^\\@]+",
+				"name": "variable.parameter.compartment.name.bngl"
+			}]
+		},
+		"expressions": {
+			"name": "meta.expression",
+			"patterns": [
+			{
+				"include": "#constants"
+			},
+			{
+				"include": "#functions"
+			},
+			{
+				"include": "#names"
+			}]
+		},
+		"strings": {
+			"patterns": [{
+				"name": "string.quoted.double.bngl",
+				"begin": "(\")",
+				"beginCaptures": {
+					"1": { "name": "markup.punctuation.quote.beginning" }
+				},
+				"end": "(\")",
+				"endCaptures": {
+					"1": { "name": "markup.punctuation.quote.beginning.bngl" }
+				}
+			}]
+		},
+		"functions": {
+			"patterns": [{
+				"name": "keyword.control.bngl",
+				"match": "\\b(abs|sin|cos|tan|exp|ln|log10|floor|ceil|sqrt|asin|acos|atan|sinh|cosh|tanh|asinh|acosh|atanh)\\b"
+			}]
+		},
+		"constants": {
+			"patterns": [
+			{
+				"name": "constant.numeric.floating.bngl",
+				"match": "(?:\\b|\\+|\\-|\\*|\\/|\\%)\\d+(\\.\\d+)?(e(\\-|\\+|\\s*)\\d+)?(E(\\-|\\+|\\s*)\\d+)?"
+			},
+			{
+				"name": "constant.character.bngl",
+				"match": "(<|>|=|!|=>|<=)"
+			},
+			{
+				"name": "keyword.operator.bngl",
+				"match": "(\\+|\\-|\\*|\\/|\\%)"
+			},
+			{
+				"name": "keyword.control.bngl",
+				"match": "\\b(if|min|max|sum|avg)\\b"
+			},
+			{
+				"name": "keyword.control.bngl",
+				"match": "\\b(pi|eulerian|time)\\b"
+			}
+			]
+		},
+		"block_tag_mod": {
+			"patterns": [{
+				"name": "meta.block_tag.mod.bngl",
+				"match": "(begin|end)"
+			}]
+		},
+		"block_tag_name": {
+			"patterns": [{
+				"name": "meta.block_tag.name.bngl",
+				"match": "(model|parameters|molecule\\s+types|compartments|seed\\s+species|species|observables|groups|energy\\s+patterns|population\\s+maps|functions|reactions|reaction\\s+rules|population\\s+maps|actions)"
+			}]
+		},
+		"comments": {
+			"patterns": [{
+				"name": "comment.line.bngl",
+				"match": "#.*"
+			}]
+		}
+	}
+}
