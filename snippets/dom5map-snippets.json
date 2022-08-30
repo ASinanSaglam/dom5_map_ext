@@ -1,0 +1,457 @@
+{
+    "Required:#dom2title": {
+        "description": "The title of the map. This must be the first command for every map. The reason why this command is named #dom2title instead of #dom5title is because the map command syntax used here was first introduced in Dominions 2: The Ascension Wars and much of it has been kept the same since then.\n",
+        "prefix": "#dom2title",
+        "body": [
+            "#dom2title ${0:<text>}"
+        ]
+    },
+    "Required:#imagefile": {
+        "description": "The image file of the map in TGA, RGB or PNG format. The file should be at least 256x256 pixels large and saved in 24 or 32 bit color formats. PNG files cannot be interlaced. A suitable size for a map might be about 1600x1200 pixels. For more detailed information related to the image file, see Chapter 5: The Map Image File.\n",
+        "prefix": "#imagefile",
+        "body": [
+            "#imagefile ${0:<filename>}"
+        ]
+    },
+    "Required:#mapsize": {
+        "description": "Lets Dominions 5 know the size of the map in pixels.\n",
+        "prefix": "#mapsize",
+        "body": [
+            "#mapsize ${0:<width>} ${1:<height>}"
+        ]
+    },
+    "Basic_Map:#domversion": {
+        "description": "Set the minimum version of Dominions required to use this map. This number is usually 450 for Dominions 5 maps, meaning Dominions version 4.50 or higher is required.\n",
+        "prefix": "#domversion",
+        "body": [
+            "#domversion ${0:<version>}"
+        ]
+    },
+    "Basic_Map:#winterimagefile": {
+        "description": "The image file for the winter version of the map. A winter map is not required, but you won’t get any winter look on cold provinces without it. A winter map must have exactly the same size as the normal map.\n",
+        "prefix": "#winterimagefile",
+        "body": [
+            "#winterimagefile ${0:<filename>}"
+        ]
+    },
+    "Basic_Map:#scenario": {
+        "description": "This command tags the map as a scenario and this will be indicated by a small burning star when selecting a map. It disables most game setup options, because those are supposed to be determined by map commands in the scenario map file.\n",
+        "prefix": "#scenario",
+        "body": [
+            "#scenario"
+        ]
+    },
+    "Basic_Map:": {
+        "description": "The description of the map that is shown after selecting a map to play on. Use two newlines to add a new paragraph. Alternatively, use ^ at the end of a line to indicate newline. If you use ^at the beginning of a line, it adds two newlines.\n",
+        "prefix": "",
+        "body": [
+            " ${0:“#description “text”}"
+        ]
+    },
+    "Basic_Map:#neighbour": {
+        "description": "akes it possible to move between these two provinces (in both directions). Use the map editor to set province neighbors. Doing it from the map file with a text editor is VERY difficult.\n",
+        "prefix": "#neighbour",
+        "body": [
+            "#neighbour ${0:<province nbr>} ${1:<province nbr>}"
+        ]
+    },
+    "Basic_Map:#neighbourspec": {
+        "description": "This command can be used to create a mountain pass or other type of special border between two provinces. Spcnbr indicates a special border types from these values: 0 = standard border, 1 = mountain pass, 2 = river border, 4 = impassable, 8 = road. You really should use the map editor to enter this information.\n",
+        "prefix": "#neighbourspec",
+        "body": [
+            "#neighbourspec ${0:<land1>} ${1:<land2>} ${2:<spcnbr>}"
+        ]
+    },
+    "Basic_Map:#pb": {
+        "description": "Sets what pixels belong to which province. This information really cannot be entered without using the map editor.\n",
+        "prefix": "#pb",
+        "body": [
+            "#pb ${0:<x>} ${1:<y>} ${2:<len>} ${3:<province nbr>}"
+        ]
+    },
+    "Basic_Map:#landname": {
+        "description": "Sets the name of a specific province.\n",
+        "prefix": "#landname",
+        "body": [
+            "#landname ${0:<province nbr>} ${1:“name”}"
+        ]
+    },
+    "Advanced_Map:#maptextcol": {
+        "description": "Sets the color used to print province names. Each value should be between 0.0 and 1.0.\n",
+        "prefix": "#maptextcol",
+        "body": [
+            "#maptextcol ${0:<red>} ${1:<green>} ${2:<blue>} ${3:<alpha>}"
+        ]
+    },
+    "Advanced_Map:#saildist": {
+        "description": "Sets the maximum sail distance in sea provinces. A commander with the sailing ability will be able to pass this many sea provinces. It default to 2, but if seas are very large or strategically important it might be good to reduce this to 1.\n",
+        "prefix": "#saildist",
+        "body": [
+            "#saildist ${0:<1-10>}"
+        ]
+    },
+    "Advanced_Map:#features": {
+        "description": "Sets the magic site frequency. This command will override the site frequency specified in the game setup screen.\n",
+        "prefix": "#features",
+        "body": [
+            "#features ${0:<0-100>}"
+        ]
+    },
+    "Advanced_Map:#nohomelandnames": {
+        "description": "When this switch is used, homelands will no longer be named after their starting nations. For example, the home of Abysia might be called The Summer Lands or whatever.\n",
+        "prefix": "#nohomelandnames",
+        "body": [
+            "#nohomelandnames"
+        ]
+    },
+    "Advanced_Map:#nonamefilter": {
+        "description": "Map filter that displays province names is disabled when this command is used. Does not work correctly.\n",
+        "prefix": "#nonamefilter",
+        "body": [
+            "#nonamefilter"
+        ]
+    },
+    "Advanced_Map:#computerplayer": {
+        "description": "This nation will always be controlled by the computer. Difficulty ranges from one to five. One is Easy AI. Two is Standard difficulty, followed by Difficult (3), Mighty (4) and Impossible (5) AI.\n",
+        "prefix": "#computerplayer",
+        "body": [
+            "#computerplayer ${0:<nation nbr>} ${1:<difficulty>}"
+        ]
+    },
+    "Advanced_Map:#allies": {
+        "description": "These two players will not attack each other. This command will only affect computer players.\n",
+        "prefix": "#allies",
+        "body": [
+            "#allies ${0:<nation nbr>} ${1:<nation nbr>}"
+        ]
+    },
+    "Advanced_Map:#cannotwin": {
+        "description": "This nation will not win when they fulfill a special victory condition.\n",
+        "prefix": "#cannotwin",
+        "body": [
+            "#cannotwin ${0:<nation nbr>}"
+        ]
+    },
+    "Advanced_Map:#victorypoints": {
+        "description": "The player who has control over this province will control from one to seven victory points. If the province has a fort then the controller of the fort controls the victory points.\n",
+        "prefix": "#victorypoints",
+        "body": [
+            "#victorypoints ${0:<land nbr>} ${1:<1-7>}"
+        ]
+    },
+    "Start_Locations:#start": {
+        "description": "Sets a recommended start location. By creating at least one start location for each player, every player will start at one of these locations. If start provinces are set, nations will start at these locations unless there are more nations than start provinces. If there are more nations than start provinces, the extra nations will start in eligible random locations. If a province is set as a start province but its terrain mask includes the value 512 (nostart), the nostart will override the start command and no nation will start there. If no start provinces are set, all provinces are available as random starting locations unless set nonstartable with the nostart command or in the map editor.\n",
+        "prefix": "#start",
+        "body": [
+            "#start ${0:<province nbr>}"
+        ]
+    },
+    "Start_Locations:#nostart": {
+        "description": "Tags a province as nonstartable. No player will start here when placed at random. This command can also be set from the map editor, which adds 512 to the province’s terrain mask.\n",
+        "prefix": "#nostart",
+        "body": [
+            "#nostart ${0:<province nbr>}"
+        ]
+    },
+    "Start_Locations:#specstart": {
+        "description": "Use this command to assign a specific nation to a specific start location. Nation numbers can be found in the Early Era Nations table and the three following tables. If you use the #specstart command, please note that using the #land command to select the starting province of the nation for further modification results in the nation starting with no troops and a dead god. This is because the #land command kills all units initially placed in the province. In such situations the #setland command should be used instead.\n",
+        "prefix": "#specstart",
+        "body": [
+            "#specstart ${0:<nation nbr>} ${1:<land nbr>}"
+        ]
+    },
+    "Start_Locations:#teamstart": {
+        "description": "This command can be used in disciple games to force teams to start at certain positions. E.g. to make one team start on one side of the map and the other team on the other side. Team nbr is a value between 0 and number of teams - 1. This value doesn’t correspond to the team number used when creating a game, it’s random which team will get which teamstart position. Use the map editor and press ctrl 0-7 to set up the team positions in an easy way.\n",
+        "prefix": "#teamstart",
+        "body": [
+            "#teamstart ${0:<land nbr>} ${1:<team nbr>}"
+        ]
+    },
+    "Province_Commands:#land": {
+        "description": "Sets the active province and kills everyone in it.\n",
+        "prefix": "#land",
+        "body": [
+            "#land ${0:<province nbr>}"
+        ]
+    },
+    "Province_Commands:#setland": {
+        "description": "Sets the active province. All the following commands will only affect the active province.\n",
+        "prefix": "#setland",
+        "body": [
+            "#setland ${0:<province nbr>}"
+        ]
+    },
+    "Province_Commands:#owner": {
+        "description": "Changes the ownership of the active province. Nation nbr indicates the new owner. Nation numbers can be found in the Early Era Nations table and the three following tables.\n",
+        "prefix": "#owner",
+        "body": [
+            "#owner ${0:<nation nbr>}"
+        ]
+    },
+    "Province_Commands:#killfeatures": {
+        "description": "Removes all magic sites from the active province.\n",
+        "prefix": "#killfeatures",
+        "body": [
+            "#killfeatures"
+        ]
+    },
+    "Province_Commands:#feature “site name>” |": {
+        "description": "Puts a specific magic site in the active province. This command can be used a maximum of eight times per province, because that is the maximum number of sites a province can have. Adding unique sites to a map using this command will NOT prevent those sites from appearing randomly, because the map file is only applied to the game map after game setup has done random determination of sites for each province. If the #killfeatures command was not used and all site slots were already filled by randomly determined sites during game setup, this command will be ignored and the site won’t appear. These same limitations apply to the following command:\n",
+        "prefix": "#feature “site name>” |",
+        "body": [
+            "#feature “site name>” | ${0:<site nbr>}"
+        ]
+    },
+    "Province_Commands:#knownfeature “site name>” |": {
+        "description": "Puts a specific magic site in the active province. This site is already found at the start of the game, regardless of its ordinary path level. Using this command prevents special features of the site that depend on its discovery from activating. For example, the magic site Academy of High Magics normally causes a laboratory to be built in the province upon discovery, but if the site is set by this command, the #lab command must be used to add a laboratory to the province. Otherwise the owner of the province must build the laboratory as normal and pay the gold cost.\n",
+        "prefix": "#knownfeature “site name>” |",
+        "body": [
+            "#knownfeature “site name>” | ${0:<site nbr>}"
+        ]
+    },
+    "Province_Commands:#temple": {
+        "description": "Puts a temple in the active province.\n",
+        "prefix": "#temple",
+        "body": [
+            "#temple"
+        ]
+    },
+    "Province_Commands:#lab": {
+        "description": "Puts a laboratory in the active province.\n",
+        "prefix": "#lab",
+        "body": [
+            "#lab"
+        ]
+    },
+    "Province_Commands:#unrest": {
+        "description": "Sets the unrest level of the active province.\n",
+        "prefix": "#unrest",
+        "body": [
+            "#unrest ${0:<0-500>}"
+        ]
+    },
+    "Province_Commands:#population": {
+        "description": "Sets the population number of the active province.\n",
+        "prefix": "#population",
+        "body": [
+            "#population ${0:<0-50000>}"
+        ]
+    },
+    "Province_Commands:#defence": {
+        "description": "Sets the province defence of the active nation. This command cannot be used for independent provinces.\n",
+        "prefix": "#defence",
+        "body": [
+            "#defence ${0:<0-125>}"
+        ]
+    },
+    "Province_Commands:#skybox “": {
+        "description": "Sets the sky (battleground background) to a tga/rgb pic of your choice for fights in the current province. The picture size should be a power of two. 512*512 is a good size.\n",
+        "prefix": "#skybox “",
+        "body": [
+            "#skybox “ ${0:“pic.tga>”}"
+        ]
+    },
+    "Province_Commands:#batmap “": {
+        "description": "Sets the battleground that fights take place in for the current province. You can use the special name ’ empty ’ for no battleground, useful for battles in space perhaps. This will affect fights both outside and inside castles.\n",
+        "prefix": "#batmap “",
+        "body": [
+            "#batmap “ ${0:“battlemap.d3m>”}"
+        ]
+    },
+    "Province_Commands:#groundcol": {
+        "description": "Color the world with the specified colors for fights in the current province. Color values range from 0 to 255.\n",
+        "prefix": "#groundcol",
+        "body": [
+            "#groundcol ${0:<red>} ${1:<green>} ${2:<blue>}"
+        ]
+    },
+    "Province_Commands:#rockcol": {
+        "description": "Color the world with the specified colors for fights in the current province. Color values range from 0 to 255.\n",
+        "prefix": "#rockcol",
+        "body": [
+            "#rockcol ${0:<red>} ${1:<green>} ${2:<blue>}"
+        ]
+    },
+    "Province_Commands:#fogcol": {
+        "description": "Color the world with the specified colors for fights in the current province. Color values range from 0 to 255.\n",
+        "prefix": "#fogcol",
+        "body": [
+            "#fogcol ${0:<red>} ${1:<green>} ${2:<blue>}"
+        ]
+    },
+    "Commander:#commander “": {
+        "description": "Puts one of these commanders in the active province. The commander will have a random name according to its nametype. This commander will be the active commander.\n",
+        "prefix": "#commander “",
+        "body": [
+            "#commander “ ${0:“type>”}"
+        ]
+    },
+    "Commander:#comname “": {
+        "description": "Replaces the active commander’s random name with this one.\n",
+        "prefix": "#comname “",
+        "body": [
+            "#comname “ ${0:“name>”}"
+        ]
+    },
+    "Commander:#bodyguards": {
+        "description": "Gives bodyguards to the active commander. This command only affects independents. AI nations will ignore this command.\n",
+        "prefix": "#bodyguards",
+        "body": [
+            "#bodyguards ${0:<nbr>} ${1:“type>”}"
+        ]
+    },
+    "Commander:#units": {
+        "description": "Gives a squad of soldiers to the active commander.\n",
+        "prefix": "#units",
+        "body": [
+            "#units ${0:<nbr of units>} ${1:“type>”}"
+        ]
+    },
+    "Commander:#xp": {
+        "description": "Gives experience points to the active commander.\n",
+        "prefix": "#xp",
+        "body": [
+            "#xp ${0:<0-900>}"
+        ]
+    },
+    "Commander:#randomequip": {
+        "description": "Gives random magic items to the active commander. Rich must be between 0 and 4. A value of 0 means small chance of getting a magic item and 4 means large chance of getting many powerful items.\n",
+        "prefix": "#randomequip",
+        "body": [
+            "#randomequip ${0:<rich>}"
+        ]
+    },
+    "Commander:#additem “": {
+        "description": "Gives a magic item to active commander. Items cannot currently be assigned by item number.\n",
+        "prefix": "#additem “",
+        "body": [
+            "#additem “ ${0:“item name>”}"
+        ]
+    },
+    "Commander:#clearmagic": {
+        "description": "Removes all magic skills from the active commander.\n",
+        "prefix": "#clearmagic",
+        "body": [
+            "#clearmagic"
+        ]
+    },
+    "Commander:#mag_fire": {
+        "description": "Gives active commander Fire magic.\n",
+        "prefix": "#mag_fire",
+        "body": [
+            "#mag_fire ${0:<level>}"
+        ]
+    },
+    "Commander:#mag_air": {
+        "description": "Gives active commander Air magic.\n",
+        "prefix": "#mag_air",
+        "body": [
+            "#mag_air ${0:<level>}"
+        ]
+    },
+    "Commander:#mag_water": {
+        "description": "Gives active commander Water magic.\n",
+        "prefix": "#mag_water",
+        "body": [
+            "#mag_water ${0:<level>}"
+        ]
+    },
+    "Commander:#mag_earth": {
+        "description": "Gives active commander Earth magic.\n",
+        "prefix": "#mag_earth",
+        "body": [
+            "#mag_earth ${0:<level>}"
+        ]
+    },
+    "Commander:#mag_astral": {
+        "description": "Gives active commander Astral magic.\n",
+        "prefix": "#mag_astral",
+        "body": [
+            "#mag_astral ${0:<level>}"
+        ]
+    },
+    "Commander:#mag_death": {
+        "description": "Gives active commander Death magic.\n",
+        "prefix": "#mag_death",
+        "body": [
+            "#mag_death ${0:<level>}"
+        ]
+    },
+    "Commander:#mag_nature": {
+        "description": "Gives active commander Nature magic.\n",
+        "prefix": "#mag_nature",
+        "body": [
+            "#mag_nature ${0:<level>}"
+        ]
+    },
+    "Commander:#mag_blood": {
+        "description": "Gives active commander Blood magic.\n",
+        "prefix": "#mag_blood",
+        "body": [
+            "#mag_blood ${0:<level>}"
+        ]
+    },
+    "Commander:#mag_priest": {
+        "description": "Gives active commander Holy magic.\n",
+        "prefix": "#mag_priest",
+        "body": [
+            "#mag_priest ${0:<level>}"
+        ]
+    },
+    "God:#god": {
+        "description": "Forces the god of one nation to be this monster. The god becomes the active commander and can be manipulated with the commander commands.\n",
+        "prefix": "#god",
+        "body": [
+            "#god ${0:<nation nbr>} ${1:“type>”}"
+        ]
+    },
+    "God:#dominionstr": {
+        "description": "Sets the dominion strength of a nation to a value between 1 and 10.\n",
+        "prefix": "#dominionstr",
+        "body": [
+            "#dominionstr ${0:<nation nbr>} ${1:<1-10>}"
+        ]
+    },
+    "God:#scale chaos": {
+        "description": "Forces the Order / Turmoil dominion scale of a nation to a value between -3 and 3. A value of 3 means that the scale is fully tipped to the right (Turmoil) and -3 means it is fully tipped to the left (Order).\n",
+        "prefix": "#scale chaos",
+        "body": [
+            "#scale chaos ${0:<nation nbr>} ${1:<(-3)-3>}"
+        ]
+    },
+    "God:#scale lazy": {
+        "description": "Forces the Productivity / Sloth dominion scale of a nation to a value between -3 and 3. A value of 3 means that the scale is fully tipped to the right (Sloth) and -3 means it is fully tipped to the left (Productivity).\n",
+        "prefix": "#scale lazy",
+        "body": [
+            "#scale lazy ${0:<nation nbr>} ${1:<(-3)-3>}"
+        ]
+    },
+    "God:#scale cold": {
+        "description": "Forces the Heat / Cold dominion scale of a nation to a value between -3 and 3. A value of 3 means that the scale is fully tipped to the right (Cold) and -3 means it is fully tipped to the left (Heat).\n",
+        "prefix": "#scale cold",
+        "body": [
+            "#scale cold ${0:<nation nbr>} ${1:<(-3)-3>}"
+        ]
+    },
+    "God:#scale death": {
+        "description": "Forces the Growth / Death dominion scale of a nation to a value between -3 and 3. A value of 3 means that the scale is fully tipped to the right (Death) and -3 means it is fully tipped to the left (Growth).\n",
+        "prefix": "#scale death",
+        "body": [
+            "#scale death ${0:<nation nbr>} ${1:<(-3)-3>}"
+        ]
+    },
+    "God:#scale unluck": {
+        "description": "Forces the Luck / Misfortune dominion scale of a nation to a value between -3 and 3. A value of 3 means that the scale is fully tipped to the right (Misfortune) and -3 means it is fully tipped to the left (Luck).\n",
+        "prefix": "#scale unluck",
+        "body": [
+            "#scale unluck ${0:<nation nbr>} ${1:<(-3)-3>}"
+        ]
+    },
+    "God:#scale unmagic": {
+        "description": "Forces the Magic / Drain dominion scale of a nation to a value between -3 and 3. A value of 3 means that the scale is fully tipped to the right (Drain) and -3 means it is fully tipped to the left (Magic).",
+        "prefix": "#scale unmagic",
+        "body": [
+            "#scale unmagic ${0:<nation nbr>} ${1:<(-3)-3>}"
+        ]
+    }
+}

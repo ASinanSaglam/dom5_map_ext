@@ -1,0 +1,78 @@
+Required :: These map commands must exist in every map file or the map will not work.
+#dom2title <text> :: The title of the map. This must be the first command for every map. The reason why this command is named #dom2title instead of #dom5title is because the map command syntax used here was first introduced in Dominions 2: The Ascension Wars and much of it has been kept the same since then.
+#imagefile <filename> :: The image file of the map in TGA, RGB or PNG format. The file should be at least 256x256 pixels large and saved in 24 or 32 bit color formats. PNG files cannot be interlaced. A suitable size for a map might be about 1600x1200 pixels. For more detailed information related to the image file, see Chapter 5: The Map Image File.
+#mapsize <width> <height> :: Lets Dominions 5 know the size of the map in pixels.
+
+Basic_Map :: These map commands are some of the most basic commands of map making. These commands do not require an active province (see Province Commands) even if they affect a specific province.
+#domversion <version> :: Set the minimum version of Dominions required to use this map. This number is usually 450 for Dominions 5 maps, meaning Dominions version 4.50 or higher is required.
+#winterimagefile <filename> :: The image file for the winter version of the map. A winter map is not required, but you won’t get any winter look on cold provinces without it. A winter map must have exactly the same size as the normal map.
+#scenario :: This command tags the map as a scenario and this will be indicated by a small burning star when selecting a map. It disables most game setup options, because those are supposed to be determined by map commands in the scenario map file.
+#description “text” :: The description of the map that is shown after selecting a map to play on. Use two newlines to add a new paragraph. Alternatively, use ^ at the end of a line to indicate newline. If you use ^at the beginning of a line, it adds two newlines.
+#neighbour <province nbr> <province nbr> :: akes it possible to move between these two provinces (in both directions). Use the map editor to set province neighbors. Doing it from the map file with a text editor is VERY difficult.
+#neighbourspec <land1> <land2> <spcnbr> :: This command can be used to create a mountain pass or other type of special border between two provinces. Spcnbr indicates a special border types from these values: 0 = standard border, 1 = mountain pass, 2 = river border, 4 = impassable, 8 = road. You really should use the map editor to enter this information.
+#pb <x> <y> <len> <province nbr> :: Sets what pixels belong to which province. This information really cannot be entered without using the map editor.
+#landname <province nbr> “name” :: Sets the name of a specific province.
+
+Advanced_Map :: These map commands are not necessary to get a working map, but they allow a great deal of customization and enhancement. These commands do not require an active province (see Province Commands) even if they affect a specific province. Many of these commands are global and affect all provinces on the map or map attributes that are not directly tied to a specific province. It is recommended that they be placed at the start of the map file after the description.
+#maptextcol <red> <green> <blue> <alpha> :: Sets the color used to print province names. Each value should be between 0.0 and 1.0.
+#saildist <1-10> :: Sets the maximum sail distance in sea provinces. A commander with the sailing ability will be able to pass this many sea provinces. It default to 2, but if seas are very large or strategically important it might be good to reduce this to 1.
+#features <0-100> :: Sets the magic site frequency. This command will override the site frequency specified in the game setup screen.
+#nohomelandnames :: When this switch is used, homelands will no longer be named after their starting nations. For example, the home of Abysia might be called The Summer Lands or whatever.
+#nonamefilter :: Map filter that displays province names is disabled when this command is used. Does not work correctly.
+#computerplayer <nation nbr> <difficulty> :: This nation will always be controlled by the computer. Difficulty ranges from one to five. One is Easy AI. Two is Standard difficulty, followed by Difficult (3), Mighty (4) and Impossible (5) AI.
+#allies <nation nbr> <nation nbr> :: These two players will not attack each other. This command will only affect computer players.
+#cannotwin <nation nbr> :: This nation will not win when they fulfill a special victory condition.
+#victorypoints <land nbr> <1-7> :: The player who has control over this province will control from one to seven victory points. If the province has a fort then the controller of the fort controls the victory points.
+
+Start_Locations :: These commands allow you to set or deny specific provinces as start locations and to control which nations starts where on a map. The specstart locations will be used if you create a game with the Use special starting locations option enabled.
+#start <province nbr> :: Sets a recommended start location. By creating at least one start location for each player, every player will start at one of these locations. If start provinces are set, nations will start at these locations unless there are more nations than start provinces. If there are more nations than start provinces, the extra nations will start in eligible random locations. If a province is set as a start province but its terrain mask includes the value 512 (nostart), the nostart will override the start command and no nation will start there. If no start provinces are set, all provinces are available as random starting locations unless set nonstartable with the nostart command or in the map editor.
+#nostart <province nbr> :: Tags a province as nonstartable. No player will start here when placed at random. This command can also be set from the map editor, which adds 512 to the province’s terrain mask.
+#specstart <nation nbr> <land nbr> :: Use this command to assign a specific nation to a specific start location. Nation numbers can be found in the Early Era Nations table and the three following tables. If you use the #specstart command, please note that using the #land command to select the starting province of the nation for further modification results in the nation starting with no troops and a dead god. This is because the #land command kills all units initially placed in the province. In such situations the #setland command should be used instead.
+#teamstart <land nbr> <team nbr> :: This command can be used in disciple games to force teams to start at certain positions. E.g. to make one team start on one side of the map and the other team on the other side. Team nbr is a value between 0 and number of teams - 1. This value doesn’t correspond to the team number used when creating a game, it’s random which team will get which teamstart position. Use the map editor and press ctrl 0-7 to set up the team positions in an easy way.
+
+Province_Commands :: These commands are used to manipulate specific provinces in order to set different features manually instead of being randomly assigned during game setup. Unless otherwise specified, they only affect the active province. All the following commands will only affect the active province. Use this command if you want to activate a province in order to replace its random inhabitants with the monsters of your choice.
+#land <province nbr> :: Sets the active province and kills everyone in it.
+#setland <province nbr> :: Sets the active province. All the following commands will only affect the active province.
+#owner <nation nbr> :: Changes the ownership of the active province. Nation nbr indicates the new owner. Nation numbers can be found in the Early Era Nations table and the three following tables.
+#killfeatures :: Removes all magic sites from the active province.
+#feature “<site name>” | <site nbr> :: Puts a specific magic site in the active province. This command can be used a maximum of eight times per province, because that is the maximum number of sites a province can have. Adding unique sites to a map using this command will NOT prevent those sites from appearing randomly, because the map file is only applied to the game map after game setup has done random determination of sites for each province. If the #killfeatures command was not used and all site slots were already filled by randomly determined sites during game setup, this command will be ignored and the site won’t appear. These same limitations apply to the following command:
+#knownfeature “<site name>” | <site nbr> :: Puts a specific magic site in the active province. This site is already found at the start of the game, regardless of its ordinary path level. Using this command prevents special features of the site that depend on its discovery from activating. For example, the magic site Academy of High Magics normally causes a laboratory to be built in the province upon discovery, but if the site is set by this command, the #lab command must be used to add a laboratory to the province. Otherwise the owner of the province must build the laboratory as normal and pay the gold cost.
+#temple :: Puts a temple in the active province.
+#lab :: Puts a laboratory in the active province.
+#unrest <0-500> :: Sets the unrest level of the active province.
+#population <0-50000> :: Sets the population number of the active province.
+#defence <0-125> :: Sets the province defence of the active nation. This command cannot be used for independent provinces.
+#skybox “<pic.tga>” :: Sets the sky (battleground background) to a tga/rgb pic of your choice for fights in the current province. The picture size should be a power of two. 512*512 is a good size.
+#batmap “<battlemap.d3m>” :: Sets the battleground that fights take place in for the current province. You can use the special name ’ empty ’ for no battleground, useful for battles in space perhaps. This will affect fights both outside and inside castles.
+#groundcol <red> <green> <blue> :: Color the world with the specified colors for fights in the current province. Color values range from 0 to 255.
+#rockcol <red> <green> <blue> :: Color the world with the specified colors for fights in the current province. Color values range from 0 to 255.
+#fogcol <red> <green> <blue> :: Color the world with the specified colors for fights in the current province. Color values range from 0 to 255.
+
+Commander :: These commands are used to set specific monsters in the active province and manipulate those monsters to modify them from the base monster type to create thematic provinces and special heroes. They must be used after the #land or #setland commands, because they require an active province. Whenever commanders and units are placed on a map, the type can be set using either the monster number or the monster name in quote marks. If the commander or unit to be added is a new monster defined in a mod, then monster number cannot be used and the name must be used instead.
+#commander “<type>” :: Puts one of these commanders in the active province. The commander will have a random name according to its nametype. This commander will be the active commander.
+#comname “<name>” :: Replaces the active commander’s random name with this one.
+#bodyguards <nbr> “<type>” :: Gives bodyguards to the active commander. This command only affects independents. AI nations will ignore this command.
+#units <nbr of units> “<type>” :: Gives a squad of soldiers to the active commander.
+#xp <0-900> :: Gives experience points to the active commander.
+#randomequip <rich> :: Gives random magic items to the active commander. Rich must be between 0 and 4. A value of 0 means small chance of getting a magic item and 4 means large chance of getting many powerful items.
+#additem “<item name>” :: Gives a magic item to active commander. Items cannot currently be assigned by item number.
+#clearmagic :: Removes all magic skills from the active commander.
+#mag_fire <level> :: Gives active commander Fire magic.
+#mag_air <level> :: Gives active commander Air magic.
+#mag_water <level> :: Gives active commander Water magic.
+#mag_earth <level> :: Gives active commander Earth magic.
+#mag_astral <level> :: Gives active commander Astral magic.
+#mag_death <level> :: Gives active commander Death magic.
+#mag_nature <level> :: Gives active commander Nature magic.
+#mag_blood <level> :: Gives active commander Blood magic.
+#mag_priest <level> :: Gives active commander Holy magic.
+
+God :: These commands are used to set a specific pretender god for a specific nation and will override the pretenders designed or loaded during game setup. Each of these commands may be used independently of the others. They do not require an active province. If human controlled nations are assigned gods or dominion scales, cheat detection will be triggered if the player do not conform to the normal design point limits for pretenders. The same limitations on defining the commander type apply, meaning that modded monsters must be defined by their name instead of monster number. Using this command will generate an error message and exit on game creation if the nation is not in play on the map.
+#god <nation nbr> “<type>” :: Forces the god of one nation to be this monster. The god becomes the active commander and can be manipulated with the commander commands.
+#dominionstr <nation nbr> <1-10> :: Sets the dominion strength of a nation to a value between 1 and 10.
+#scale chaos <nation nbr> <(-3)-3> :: Forces the Order / Turmoil dominion scale of a nation to a value between -3 and 3. A value of 3 means that the scale is fully tipped to the right (Turmoil) and -3 means it is fully tipped to the left (Order).
+#scale lazy <nation nbr> <(-3)-3> :: Forces the Productivity / Sloth dominion scale of a nation to a value between -3 and 3. A value of 3 means that the scale is fully tipped to the right (Sloth) and -3 means it is fully tipped to the left (Productivity).
+#scale cold <nation nbr> <(-3)-3> :: Forces the Heat / Cold dominion scale of a nation to a value between -3 and 3. A value of 3 means that the scale is fully tipped to the right (Cold) and -3 means it is fully tipped to the left (Heat).
+#scale death <nation nbr> <(-3)-3> :: Forces the Growth / Death dominion scale of a nation to a value between -3 and 3. A value of 3 means that the scale is fully tipped to the right (Death) and -3 means it is fully tipped to the left (Growth).
+#scale unluck <nation nbr> <(-3)-3> :: Forces the Luck / Misfortune dominion scale of a nation to a value between -3 and 3. A value of 3 means that the scale is fully tipped to the right (Misfortune) and -3 means it is fully tipped to the left (Luck).
+#scale unmagic <nation nbr> <(-3)-3> :: Forces the Magic / Drain dominion scale of a nation to a value between -3 and 3. A value of 3 means that the scale is fully tipped to the right (Drain) and -3 means it is fully tipped to the left (Magic).
