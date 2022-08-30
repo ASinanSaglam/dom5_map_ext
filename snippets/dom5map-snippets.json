@@ -38,14 +38,14 @@
         "description": "This command tags the map as a scenario and this will be indicated by a small burning star when selecting a map. It disables most game setup options, because those are supposed to be determined by map commands in the scenario map file.\n",
         "prefix": "#scenario",
         "body": [
-            "#scenario"
+            "#scenario ${0:<filename>}"
         ]
     },
-    "Basic_Map:": {
+    "Basic_Map:#description": {
         "description": "The description of the map that is shown after selecting a map to play on. Use two newlines to add a new paragraph. Alternatively, use ^ at the end of a line to indicate newline. If you use ^at the beginning of a line, it adds two newlines.\n",
-        "prefix": "",
+        "prefix": "#description",
         "body": [
-            " ${0:“#description “text”}"
+            "#description ${0:“text”}"
         ]
     },
     "Basic_Map:#neighbour": {
@@ -101,14 +101,14 @@
         "description": "When this switch is used, homelands will no longer be named after their starting nations. For example, the home of Abysia might be called The Summer Lands or whatever.\n",
         "prefix": "#nohomelandnames",
         "body": [
-            "#nohomelandnames"
+            "#nohomelandnames ${0:<0-100>}"
         ]
     },
     "Advanced_Map:#nonamefilter": {
         "description": "Map filter that displays province names is disabled when this command is used. Does not work correctly.\n",
         "prefix": "#nonamefilter",
         "body": [
-            "#nonamefilter"
+            "#nonamefilter ${0:<0-100>}"
         ]
     },
     "Advanced_Map:#computerplayer": {
@@ -137,6 +137,20 @@
         "prefix": "#victorypoints",
         "body": [
             "#victorypoints ${0:<land nbr>} ${1:<1-7>}"
+        ]
+    },
+    "Advanced_Map:#allowedplayer": {
+        "description": "Makes this nation one of the allowed nations to play on this map. Use this command multiple times or the map will only be able to host one player. This command can be used to make era specific maps.\n",
+        "prefix": "#allowedplayer",
+        "body": [
+            "#allowedplayer ${0:<nation nbr>}"
+        ]
+    },
+    "Advanced_Map:#victorycondition": {
+        "description": "The game will end when one player fulfills a special condition, see table Victory Conditions. Dominion score is 11-20 points per converted province, depending on the strength of the dominion. The value of ‘condition’ should be a number from 0 to 6.\n",
+        "prefix": "#victorycondition",
+        "body": [
+            "#victorycondition ${0:<condition>} ${1:<attribute>}"
         ]
     },
     "Start_Locations:#start": {
@@ -192,35 +206,35 @@
         "description": "Removes all magic sites from the active province.\n",
         "prefix": "#killfeatures",
         "body": [
-            "#killfeatures"
+            "#killfeatures ${0:<nation nbr>}"
         ]
     },
-    "Province_Commands:#feature “site name>” |": {
+    "Province_Commands:#feature": {
         "description": "Puts a specific magic site in the active province. This command can be used a maximum of eight times per province, because that is the maximum number of sites a province can have. Adding unique sites to a map using this command will NOT prevent those sites from appearing randomly, because the map file is only applied to the game map after game setup has done random determination of sites for each province. If the #killfeatures command was not used and all site slots were already filled by randomly determined sites during game setup, this command will be ignored and the site won’t appear. These same limitations apply to the following command:\n",
-        "prefix": "#feature “site name>” |",
+        "prefix": "#feature",
         "body": [
-            "#feature “site name>” | ${0:<site nbr>}"
+            "#feature ${0:<site nbr>} ${1:“<site name>”}"
         ]
     },
-    "Province_Commands:#knownfeature “site name>” |": {
+    "Province_Commands:#knownfeature": {
         "description": "Puts a specific magic site in the active province. This site is already found at the start of the game, regardless of its ordinary path level. Using this command prevents special features of the site that depend on its discovery from activating. For example, the magic site Academy of High Magics normally causes a laboratory to be built in the province upon discovery, but if the site is set by this command, the #lab command must be used to add a laboratory to the province. Otherwise the owner of the province must build the laboratory as normal and pay the gold cost.\n",
-        "prefix": "#knownfeature “site name>” |",
+        "prefix": "#knownfeature",
         "body": [
-            "#knownfeature “site name>” | ${0:<site nbr>}"
+            "#knownfeature ${0:<site nbr>} ${1:“<site name>”}"
         ]
     },
     "Province_Commands:#temple": {
         "description": "Puts a temple in the active province.\n",
         "prefix": "#temple",
         "body": [
-            "#temple"
+            "#temple ${0:<site nbr>} ${1:“<site name>”}"
         ]
     },
     "Province_Commands:#lab": {
         "description": "Puts a laboratory in the active province.\n",
         "prefix": "#lab",
         "body": [
-            "#lab"
+            "#lab ${0:<site nbr>} ${1:“<site name>”}"
         ]
     },
     "Province_Commands:#unrest": {
@@ -244,18 +258,18 @@
             "#defence ${0:<0-125>}"
         ]
     },
-    "Province_Commands:#skybox “": {
+    "Province_Commands:#skybox": {
         "description": "Sets the sky (battleground background) to a tga/rgb pic of your choice for fights in the current province. The picture size should be a power of two. 512*512 is a good size.\n",
-        "prefix": "#skybox “",
+        "prefix": "#skybox",
         "body": [
-            "#skybox “ ${0:“pic.tga>”}"
+            "#skybox ${0:“<pic.tga>”}"
         ]
     },
-    "Province_Commands:#batmap “": {
+    "Province_Commands:#batmap": {
         "description": "Sets the battleground that fights take place in for the current province. You can use the special name ’ empty ’ for no battleground, useful for battles in space perhaps. This will affect fights both outside and inside castles.\n",
-        "prefix": "#batmap “",
+        "prefix": "#batmap",
         "body": [
-            "#batmap “ ${0:“battlemap.d3m>”}"
+            "#batmap ${0:“<battlemap.d3m>”}"
         ]
     },
     "Province_Commands:#groundcol": {
@@ -279,32 +293,46 @@
             "#fogcol ${0:<red>} ${1:<green>} ${2:<blue>}"
         ]
     },
-    "Commander:#commander “": {
-        "description": "Puts one of these commanders in the active province. The commander will have a random name according to its nametype. This commander will be the active commander.\n",
-        "prefix": "#commander “",
+    "Province_Commands:#poptype": {
+        "description": "Sets the population type of the active province. This determines which troops may be recruited in the province. Poptype numbers can be found in the large table on the following page. If poptype is set with a number higher than existing poptypes, there will be no units available for recruitment in the province. This command will override the poptype that was randomly assigned to the province during game creation, but it will NOT change the independent defenders, which will be of the poptype this command overwrote. Example: if the randomly determined poptype during game creation was 42 (Jade Amazons) and the poptype has been set to 25 (Barbarians) by this map command, the independent defenders will still be Jade Amazons. You just won’t be able to recruit them. If you want the independent defenders to match the specified poptype, you must set them manually in the map file using the Commander Commands . You should also use the #land command to select the province if you do not want the randomly assigned defenders in addition to the ones you set manually.\n",
+        "prefix": "#poptype",
         "body": [
-            "#commander “ ${0:“type>”}"
+            "#poptype ${0:<poptype nbr>}"
         ]
     },
-    "Commander:#comname “": {
-        "description": "Replaces the active commander’s random name with this one.\n",
-        "prefix": "#comname “",
+    "Province_Commands:#fort": {
+        "description": "Puts a specific fort in the active province. Fort nbr is a number between 1 and 29 and the list of fort numbers can be found in the Fortifications table. Will replace a nation’s default fort if used on a capital location.\n",
+        "prefix": "#fort",
         "body": [
-            "#comname “ ${0:“name>”}"
+            "#fort ${0:<fort nbr>}"
+        ]
+    },
+    "Commander:#commander": {
+        "description": "Puts one of these commanders in the active province. The commander will have a random name according to its nametype. This commander will be the active commander.\n",
+        "prefix": "#commander",
+        "body": [
+            "#commander ${0:“<type>”}"
+        ]
+    },
+    "Commander:#comname": {
+        "description": "Replaces the active commander’s random name with this one.\n",
+        "prefix": "#comname",
+        "body": [
+            "#comname ${0:“<name>”}"
         ]
     },
     "Commander:#bodyguards": {
         "description": "Gives bodyguards to the active commander. This command only affects independents. AI nations will ignore this command.\n",
         "prefix": "#bodyguards",
         "body": [
-            "#bodyguards ${0:<nbr>} ${1:“type>”}"
+            "#bodyguards ${0:<nbr>} ${1:“<type>”}"
         ]
     },
     "Commander:#units": {
         "description": "Gives a squad of soldiers to the active commander.\n",
         "prefix": "#units",
         "body": [
-            "#units ${0:<nbr of units>} ${1:“type>”}"
+            "#units ${0:<nbr of units>} ${1:“<type>”}"
         ]
     },
     "Commander:#xp": {
@@ -321,18 +349,18 @@
             "#randomequip ${0:<rich>}"
         ]
     },
-    "Commander:#additem “": {
+    "Commander:#additem": {
         "description": "Gives a magic item to active commander. Items cannot currently be assigned by item number.\n",
-        "prefix": "#additem “",
+        "prefix": "#additem",
         "body": [
-            "#additem “ ${0:“item name>”}"
+            "#additem ${0:“<item name>”}"
         ]
     },
     "Commander:#clearmagic": {
         "description": "Removes all magic skills from the active commander.\n",
         "prefix": "#clearmagic",
         "body": [
-            "#clearmagic"
+            "#clearmagic ${0:“<item name>”}"
         ]
     },
     "Commander:#mag_fire": {
@@ -402,7 +430,7 @@
         "description": "Forces the god of one nation to be this monster. The god becomes the active commander and can be manipulated with the commander commands.\n",
         "prefix": "#god",
         "body": [
-            "#god ${0:<nation nbr>} ${1:“type>”}"
+            "#god ${0:<nation nbr>} ${1:“<type>”}"
         ]
     },
     "God:#dominionstr": {
@@ -412,46 +440,1327 @@
             "#dominionstr ${0:<nation nbr>} ${1:<1-10>}"
         ]
     },
-    "God:#scale chaos": {
-        "description": "Forces the Order / Turmoil dominion scale of a nation to a value between -3 and 3. A value of 3 means that the scale is fully tipped to the right (Turmoil) and -3 means it is fully tipped to the left (Order).\n",
-        "prefix": "#scale chaos",
-        "body": [
-            "#scale chaos ${0:<nation nbr>} ${1:<(-3)-3>}"
-        ]
-    },
-    "God:#scale lazy": {
-        "description": "Forces the Productivity / Sloth dominion scale of a nation to a value between -3 and 3. A value of 3 means that the scale is fully tipped to the right (Sloth) and -3 means it is fully tipped to the left (Productivity).\n",
-        "prefix": "#scale lazy",
-        "body": [
-            "#scale lazy ${0:<nation nbr>} ${1:<(-3)-3>}"
-        ]
-    },
-    "God:#scale cold": {
-        "description": "Forces the Heat / Cold dominion scale of a nation to a value between -3 and 3. A value of 3 means that the scale is fully tipped to the right (Cold) and -3 means it is fully tipped to the left (Heat).\n",
-        "prefix": "#scale cold",
-        "body": [
-            "#scale cold ${0:<nation nbr>} ${1:<(-3)-3>}"
-        ]
-    },
-    "God:#scale death": {
-        "description": "Forces the Growth / Death dominion scale of a nation to a value between -3 and 3. A value of 3 means that the scale is fully tipped to the right (Death) and -3 means it is fully tipped to the left (Growth).\n",
-        "prefix": "#scale death",
-        "body": [
-            "#scale death ${0:<nation nbr>} ${1:<(-3)-3>}"
-        ]
-    },
-    "God:#scale unluck": {
-        "description": "Forces the Luck / Misfortune dominion scale of a nation to a value between -3 and 3. A value of 3 means that the scale is fully tipped to the right (Misfortune) and -3 means it is fully tipped to the left (Luck).\n",
-        "prefix": "#scale unluck",
-        "body": [
-            "#scale unluck ${0:<nation nbr>} ${1:<(-3)-3>}"
-        ]
-    },
-    "God:#scale unmagic": {
+    "God:#scale": {
         "description": "Forces the Magic / Drain dominion scale of a nation to a value between -3 and 3. A value of 3 means that the scale is fully tipped to the right (Drain) and -3 means it is fully tipped to the left (Magic).",
-        "prefix": "#scale unmagic",
+        "prefix": "#scale",
         "body": [
-            "#scale unmagic ${0:<nation nbr>} ${1:<(-3)-3>}"
+            "#scale ${0:<nation nbr>}"
+        ]
+    },
+    "nation nbr-ea-arcoscephale": {
+        "description": "table of nation numbers:Golden Era",
+        "prefix": "ea-arcoscephale",
+        "body": [
+            "5"
+        ]
+    },
+    "nation nbr-ea-ermor": {
+        "description": "table of nation numbers:New Faith",
+        "prefix": "ea-ermor",
+        "body": [
+            "6"
+        ]
+    },
+    "nation nbr-ea-ulm": {
+        "description": "table of nation numbers:Enigma of Steel",
+        "prefix": "ea-ulm",
+        "body": [
+            "7"
+        ]
+    },
+    "nation nbr-ea-marverni": {
+        "description": "table of nation numbers:Time of Druids",
+        "prefix": "ea-marverni",
+        "body": [
+            "8"
+        ]
+    },
+    "nation nbr-ea-sauromatia": {
+        "description": "table of nation numbers:Amazon Queens",
+        "prefix": "ea-sauromatia",
+        "body": [
+            "9"
+        ]
+    },
+    "nation nbr-ea-t'ien-ch'i": {
+        "description": "table of nation numbers:spring and Autumn",
+        "prefix": "ea-t'ien-ch'i",
+        "body": [
+            "10"
+        ]
+    },
+    "nation nbr-ea-machaka": {
+        "description": "table of nation numbers:Lion Kings",
+        "prefix": "ea-machaka",
+        "body": [
+            "11"
+        ]
+    },
+    "nation nbr-ea-mictlan": {
+        "description": "table of nation numbers:Reign of Blood",
+        "prefix": "ea-mictlan",
+        "body": [
+            "12"
+        ]
+    },
+    "nation nbr-ea-abysia": {
+        "description": "table of nation numbers:Children of Flame",
+        "prefix": "ea-abysia",
+        "body": [
+            "13"
+        ]
+    },
+    "nation nbr-ea-caelum": {
+        "description": "table of nation numbers:Eagle Kings",
+        "prefix": "ea-caelum",
+        "body": [
+            "14"
+        ]
+    },
+    "nation nbr-ea-c'tis": {
+        "description": "table of nation numbers:Lizard Kings",
+        "prefix": "ea-c'tis",
+        "body": [
+            "15"
+        ]
+    },
+    "nation nbr-ea-pangaea": {
+        "description": "table of nation numbers:Age of Revelry",
+        "prefix": "ea-pangaea",
+        "body": [
+            "16"
+        ]
+    },
+    "nation nbr-ea-agartha": {
+        "description": "table of nation numbers:Pale Ones",
+        "prefix": "ea-agartha",
+        "body": [
+            "17"
+        ]
+    },
+    "nation nbr-ea-tirnan'og": {
+        "description": "table of nation numbers:Land of the Ever Young",
+        "prefix": "ea-tirnan'og",
+        "body": [
+            "18"
+        ]
+    },
+    "nation nbr-ea-fomoria": {
+        "description": "table of nation numbers:The Cursed Ones",
+        "prefix": "ea-fomoria",
+        "body": [
+            "19"
+        ]
+    },
+    "nation nbr-ea-vanheim": {
+        "description": "table of nation numbers:Age of Vanir",
+        "prefix": "ea-vanheim",
+        "body": [
+            "20"
+        ]
+    },
+    "nation nbr-ea-helheim": {
+        "description": "table of nation numbers:Dusk and Death",
+        "prefix": "ea-helheim",
+        "body": [
+            "21"
+        ]
+    },
+    "nation nbr-ea-niefelheim": {
+        "description": "table of nation numbers:Sons of Winter",
+        "prefix": "ea-niefelheim",
+        "body": [
+            "22"
+        ]
+    },
+    "nation nbr-ea-kailasa": {
+        "description": "table of nation numbers:Rise of the Ape Kings",
+        "prefix": "ea-kailasa",
+        "body": [
+            "25"
+        ]
+    },
+    "nation nbr-ea-lanka": {
+        "description": "table of nation numbers:Land of Demons",
+        "prefix": "ea-lanka",
+        "body": [
+            "26"
+        ]
+    },
+    "nation nbr-ea-yomi": {
+        "description": "table of nation numbers:Oni Kings",
+        "prefix": "ea-yomi",
+        "body": [
+            "27"
+        ]
+    },
+    "nation nbr-ea-hinnom": {
+        "description": "table of nation numbers:Sons of the Fallen",
+        "prefix": "ea-hinnom",
+        "body": [
+            "28"
+        ]
+    },
+    "nation nbr-ea-ur": {
+        "description": "table of nation numbers:The First City",
+        "prefix": "ea-ur",
+        "body": [
+            "29"
+        ]
+    },
+    "nation nbr-ea-berytos": {
+        "description": "table of nation numbers:Phoenix Empire",
+        "prefix": "ea-berytos",
+        "body": [
+            "30"
+        ]
+    },
+    "nation nbr-ea-xibalba": {
+        "description": "table of nation numbers:Vigil of the Sun",
+        "prefix": "ea-xibalba",
+        "body": [
+            "31"
+        ]
+    },
+    "nation nbr-ea-atlantis": {
+        "description": "table of nation numbers:Emergence of the Deep Ones",
+        "prefix": "ea-atlantis",
+        "body": [
+            "36"
+        ]
+    },
+    "nation nbr-ea-r'lyeh": {
+        "description": "table of nation numbers:Time of Aboleths",
+        "prefix": "ea-r'lyeh",
+        "body": [
+            "37"
+        ]
+    },
+    "nation nbr-ea-pelagia": {
+        "description": "table of nation numbers:Pearl Kings",
+        "prefix": "ea-pelagia",
+        "body": [
+            "38"
+        ]
+    },
+    "nation nbr-ea-oceania": {
+        "description": "table of nation numbers:Coming of the Capricorns",
+        "prefix": "ea-oceania",
+        "body": [
+            "39"
+        ]
+    },
+    "nation nbr-ea-therodos": {
+        "description": "table of nation numbers:Telkhine Spectre",
+        "prefix": "ea-therodos",
+        "body": [
+            "40"
+        ]
+    },
+    "nation nbr-ma-arcoscephale": {
+        "description": "table of nation numbers:The Old Kingdom",
+        "prefix": "ma-arcoscephale",
+        "body": [
+            "43"
+        ]
+    },
+    "nation nbr-ma-ermor": {
+        "description": "table of nation numbers:Ashen Empire",
+        "prefix": "ma-ermor",
+        "body": [
+            "44"
+        ]
+    },
+    "nation nbr-ma-sceleria": {
+        "description": "table of nation numbers:Reformed Empire",
+        "prefix": "ma-sceleria",
+        "body": [
+            "45"
+        ]
+    },
+    "nation nbr-ma-pythium": {
+        "description": "table of nation numbers:Emerald Empire",
+        "prefix": "ma-pythium",
+        "body": [
+            "46"
+        ]
+    },
+    "nation nbr-ma-man": {
+        "description": "table of nation numbers:Tower of Avalon",
+        "prefix": "ma-man",
+        "body": [
+            "47"
+        ]
+    },
+    "nation nbr-ma-eriu": {
+        "description": "table of nation numbers:Last of the Tuatha",
+        "prefix": "ma-eriu",
+        "body": [
+            "48"
+        ]
+    },
+    "nation nbr-ma-ulm": {
+        "description": "table of nation numbers:Forges of Ulm",
+        "prefix": "ma-ulm",
+        "body": [
+            "49"
+        ]
+    },
+    "nation nbr-ma-marignon": {
+        "description": "table of nation numbers:Fiery Justice",
+        "prefix": "ma-marignon",
+        "body": [
+            "50"
+        ]
+    },
+    "nation nbr-ma-mictlan": {
+        "description": "table of nation numbers:Reign of the Lawgiver",
+        "prefix": "ma-mictlan",
+        "body": [
+            "51"
+        ]
+    },
+    "nation nbr-ma-t'iench'i": {
+        "description": "table of nation numbers:Imperial Bureaucracy",
+        "prefix": "ma-t'iench'i",
+        "body": [
+            "52"
+        ]
+    },
+    "nation nbr-ma-machaka": {
+        "description": "table of nation numbers:Reign of Sorcerors",
+        "prefix": "ma-machaka",
+        "body": [
+            "53"
+        ]
+    },
+    "nation nbr-ma-agartha": {
+        "description": "table of nation numbers:Golem Cult",
+        "prefix": "ma-agartha",
+        "body": [
+            "54"
+        ]
+    },
+    "nation nbr-ma-abysia": {
+        "description": "table of nation numbers:Blood and Fire",
+        "prefix": "ma-abysia",
+        "body": [
+            "55"
+        ]
+    },
+    "nation nbr-ma-caelum": {
+        "description": "table of nation numbers:Reign of the Seraphim",
+        "prefix": "ma-caelum",
+        "body": [
+            "56"
+        ]
+    },
+    "nation nbr-ma-c'tis": {
+        "description": "table of nation numbers:Miasma",
+        "prefix": "ma-c'tis",
+        "body": [
+            "57"
+        ]
+    },
+    "nation nbr-ma-pangaea": {
+        "description": "table of nation numbers:Age of Bronze",
+        "prefix": "ma-pangaea",
+        "body": [
+            "58"
+        ]
+    },
+    "nation nbr-ma-asphodel": {
+        "description": "table of nation numbers:Carrion Woods",
+        "prefix": "ma-asphodel",
+        "body": [
+            "59"
+        ]
+    },
+    "nation nbr-ma-vanheim": {
+        "description": "table of nation numbers:Arrival of Man",
+        "prefix": "ma-vanheim",
+        "body": [
+            "60"
+        ]
+    },
+    "nation nbr-ma-jotunheim": {
+        "description": "table of nation numbers:Iron Woods",
+        "prefix": "ma-jotunheim",
+        "body": [
+            "61"
+        ]
+    },
+    "nation nbr-ma-vanarus": {
+        "description": "table of nation numbers:Land of the Chuds",
+        "prefix": "ma-vanarus",
+        "body": [
+            "62"
+        ]
+    },
+    "nation nbr-ma-bandar Log": {
+        "description": "table of nation numbers:Land of the Apes",
+        "prefix": "ma-bandar Log",
+        "body": [
+            "63"
+        ]
+    },
+    "nation nbr-ma-shinuyama": {
+        "description": "table of nation numbers:Land of the Bakemono",
+        "prefix": "ma-shinuyama",
+        "body": [
+            "64"
+        ]
+    },
+    "nation nbr-ma-ashdod": {
+        "description": "table of nation numbers:Reign of the Anakim",
+        "prefix": "ma-ashdod",
+        "body": [
+            "65"
+        ]
+    },
+    "nation nbr-ma-uruk": {
+        "description": "table of nation numbers:City States",
+        "prefix": "ma-uruk",
+        "body": [
+            "66"
+        ]
+    },
+    "nation nbr-ma-nazca": {
+        "description": "table of nation numbers:Kingdom of the Sun",
+        "prefix": "ma-nazca",
+        "body": [
+            "67"
+        ]
+    },
+    "nation nbr-ma-xibalba": {
+        "description": "table of nation numbers:Flooded Caves",
+        "prefix": "ma-xibalba",
+        "body": [
+            "68"
+        ]
+    },
+    "nation nbr-ma-atlantis": {
+        "description": "table of nation numbers:Kings of the Deep",
+        "prefix": "ma-atlantis",
+        "body": [
+            "73"
+        ]
+    },
+    "nation nbr-ma-r'lyeh": {
+        "description": "table of nation numbers:Fallen Star",
+        "prefix": "ma-r'lyeh",
+        "body": [
+            "74"
+        ]
+    },
+    "nation nbr-ma-pelagia": {
+        "description": "table of nation numbers:Triton Kings",
+        "prefix": "ma-pelagia",
+        "body": [
+            "75"
+        ]
+    },
+    "nation nbr-ma-oceania": {
+        "description": "table of nation numbers:Mermidons",
+        "prefix": "ma-oceania",
+        "body": [
+            "76"
+        ]
+    },
+    "nation nbr-ma-ys": {
+        "description": "table of nation numbers:Morgen",
+        "prefix": "ma-ys",
+        "body": [
+            "77"
+        ]
+    },
+    "nation nbr-la-arcoscephale": {
+        "description": "table of nation numbers:Sibylline Guidance",
+        "prefix": "la-arcoscephale",
+        "body": [
+            "80"
+        ]
+    },
+    "nation nbr-la-pythium": {
+        "description": "table of nation numbers:Serpent Cult",
+        "prefix": "la-pythium",
+        "body": [
+            "81"
+        ]
+    },
+    "nation nbr-la-lemur": {
+        "description": "table of nation numbers:Soul Gate",
+        "prefix": "la-lemur",
+        "body": [
+            "82"
+        ]
+    },
+    "nation nbr-la-man": {
+        "description": "table of nation numbers:Towers of Chelms",
+        "prefix": "la-man",
+        "body": [
+            "83"
+        ]
+    },
+    "nation nbr-la-ulm": {
+        "description": "table of nation numbers:Black Forest",
+        "prefix": "la-ulm",
+        "body": [
+            "84"
+        ]
+    },
+    "nation nbr-la-marignon": {
+        "description": "table of nation numbers:Conquerors of the Sea",
+        "prefix": "la-marignon",
+        "body": [
+            "85"
+        ]
+    },
+    "nation nbr-la-mictlan": {
+        "description": "table of nation numbers:Blood and Rain",
+        "prefix": "la-mictlan",
+        "body": [
+            "86"
+        ]
+    },
+    "nation nbr-la-t'iench'i": {
+        "description": "table of nation numbers:Barbarian Kings",
+        "prefix": "la-t'iench'i",
+        "body": [
+            "87"
+        ]
+    },
+    "nation nbr-la-jomon": {
+        "description": "table of nation numbers:Human Daimyos",
+        "prefix": "la-jomon",
+        "body": [
+            "89"
+        ]
+    },
+    "nation nbr-la-agartha": {
+        "description": "table of nation numbers:Ktonian Dead",
+        "prefix": "la-agartha",
+        "body": [
+            "90"
+        ]
+    },
+    "nation nbr-la-abysia": {
+        "description": "table of nation numbers:Blood of Humans",
+        "prefix": "la-abysia",
+        "body": [
+            "91"
+        ]
+    },
+    "nation nbr-la-caelum": {
+        "description": "table of nation numbers:Return of the Raptors",
+        "prefix": "la-caelum",
+        "body": [
+            "92"
+        ]
+    },
+    "nation nbr-la-c'tis": {
+        "description": "table of nation numbers:Desert Tombs",
+        "prefix": "la-c'tis",
+        "body": [
+            "93"
+        ]
+    },
+    "nation nbr-la-pangaea": {
+        "description": "table of nation numbers:New Era",
+        "prefix": "la-pangaea",
+        "body": [
+            "94"
+        ]
+    },
+    "nation nbr-la-midgard": {
+        "description": "table of nation numbers:Age of Men",
+        "prefix": "la-midgard",
+        "body": [
+            "95"
+        ]
+    },
+    "nation nbr-la-utgard": {
+        "description": "table of nation numbers:Well of Urd",
+        "prefix": "la-utgard",
+        "body": [
+            "96"
+        ]
+    },
+    "nation nbr-la-bogarus": {
+        "description": "table of nation numbers:Age of Heroes",
+        "prefix": "la-bogarus",
+        "body": [
+            "97"
+        ]
+    },
+    "nation nbr-la-patala": {
+        "description": "table of nation numbers:Reign of the Nagas",
+        "prefix": "la-patala",
+        "body": [
+            "98"
+        ]
+    },
+    "nation nbr-la-gath": {
+        "description": "table of nation numbers:Last of the Giants",
+        "prefix": "la-gath",
+        "body": [
+            "99"
+        ]
+    },
+    "nation nbr-la-ragha": {
+        "description": "table of nation numbers:Dual Kingdom",
+        "prefix": "la-ragha",
+        "body": [
+            "100"
+        ]
+    },
+    "nation nbr-la-xibalba": {
+        "description": "table of nation numbers:Return of the Zotz",
+        "prefix": "la-xibalba",
+        "body": [
+            "101"
+        ]
+    },
+    "nation nbr-la-atlantis": {
+        "description": "table of nation numbers:Frozen Sea",
+        "prefix": "la-atlantis",
+        "body": [
+            "106"
+        ]
+    },
+    "nation nbr-la-r'lyeh": {
+        "description": "table of nation numbers:Dreamlands",
+        "prefix": "la-r'lyeh",
+        "body": [
+            "107"
+        ]
+    },
+    "nation nbr-la-erytheia": {
+        "description": "table of nation numbers:Kingdom of Two Worlds",
+        "prefix": "la-erytheia",
+        "body": [
+            "108"
+        ]
+    },
+    "nation nbr-sp-indie": {
+        "description": "table of nation numbers:Independents",
+        "prefix": "sp-indie",
+        "body": [
+            "0"
+        ]
+    },
+    "nation nbr-sp-specindies": {
+        "description": "table of nation numbers:Special Independents, e.g. Horrors",
+        "prefix": "sp-specindies",
+        "body": [
+            "2"
+        ]
+    },
+    "poptype nbr-pop-barb": {
+        "description": "table of population types:Barbarians",
+        "prefix": "pop-barb",
+        "body": [
+            "25"
+        ]
+    },
+    "poptype nbr-pop-tribe_horse": {
+        "description": "table of population types:Horse Tribe",
+        "prefix": "pop-tribe_horse",
+        "body": [
+            "26"
+        ]
+    },
+    "poptype nbr-pop-mil_arch_inf1": {
+        "description": "table of population types:Militia, Archers, Hvy Inf",
+        "prefix": "pop-mil_arch_inf1",
+        "body": [
+            "27"
+        ]
+    },
+    "poptype nbr-pop-mil_arch_inf2": {
+        "description": "table of population types:Militia, Archers, Hvy Inf",
+        "prefix": "pop-mil_arch_inf2",
+        "body": [
+            "28"
+        ]
+    },
+    "poptype nbr-pop-mil_arch_inf3": {
+        "description": "table of population types:Militia, Archers, Hvy Inf",
+        "prefix": "pop-mil_arch_inf3",
+        "body": [
+            "29"
+        ]
+    },
+    "poptype nbr-pop-mil_long_knight": {
+        "description": "table of population types:Militia, Longbow, Knight",
+        "prefix": "pop-mil_long_knight",
+        "body": [
+            "30"
+        ]
+    },
+    "poptype nbr-pop-triton1": {
+        "description": "table of population types:Tritons",
+        "prefix": "pop-triton1",
+        "body": [
+            "31"
+        ]
+    },
+    "poptype nbr-pop-ltinf_hvinf_xbow1": {
+        "description": "table of population types:Lt Inf, Hvy Inf, X-Bow",
+        "prefix": "pop-ltinf_hvinf_xbow1",
+        "body": [
+            "32"
+        ]
+    },
+    "poptype nbr-pop-ltinf_hvinf_xbow2": {
+        "description": "table of population types:Lt Inf, Hvy Inf, X-Bow",
+        "prefix": "pop-ltinf_hvinf_xbow2",
+        "body": [
+            "33"
+        ]
+    },
+    "poptype nbr-pop-raptors": {
+        "description": "table of population types:Raptors",
+        "prefix": "pop-raptors",
+        "body": [
+            "34"
+        ]
+    },
+    "poptype nbr-pop-slingers": {
+        "description": "table of population types:Slingers",
+        "prefix": "pop-slingers",
+        "body": [
+            "35"
+        ]
+    },
+    "poptype nbr-pop-lizards": {
+        "description": "table of population types:Lizards",
+        "prefix": "pop-lizards",
+        "body": [
+            "36"
+        ]
+    },
+    "poptype nbr-pop-woodsmen": {
+        "description": "table of population types:Woodsmen",
+        "prefix": "pop-woodsmen",
+        "body": [
+            "37"
+        ]
+    },
+    "poptype nbr-pop-hoburg": {
+        "description": "table of population types:Hoburg",
+        "prefix": "pop-hoburg",
+        "body": [
+            "38"
+        ]
+    },
+    "poptype nbr-pop-mil_arch_ltinf": {
+        "description": "table of population types:Militia, Archers, Lt Inf",
+        "prefix": "pop-mil_arch_ltinf",
+        "body": [
+            "39"
+        ]
+    },
+    "poptype nbr-pop-amz_cryst": {
+        "description": "table of population types:Amazon, Crystal",
+        "prefix": "pop-amz_cryst",
+        "body": [
+            "40"
+        ]
+    },
+    "poptype nbr-pop-amz_garnet": {
+        "description": "table of population types:Amazon, Garnet",
+        "prefix": "pop-amz_garnet",
+        "body": [
+            "41"
+        ]
+    },
+    "poptype nbr-pop-amz_jade": {
+        "description": "table of population types:Amazon, Jade",
+        "prefix": "pop-amz_jade",
+        "body": [
+            "42"
+        ]
+    },
+    "poptype nbr-pop-amz_onyx": {
+        "description": "table of population types:Amazon, Onyx",
+        "prefix": "pop-amz_onyx",
+        "body": [
+            "43"
+        ]
+    },
+    "poptype nbr-pop-troglodytes": {
+        "description": "table of population types:Troglodytes",
+        "prefix": "pop-troglodytes",
+        "body": [
+            "44"
+        ]
+    },
+    "poptype nbr-pop-triton_sharknight": {
+        "description": "table of population types:Tritons, Shark Knights",
+        "prefix": "pop-triton_sharknight",
+        "body": [
+            "45"
+        ]
+    },
+    "poptype nbr-pop-triton_amber_clan": {
+        "description": "table of population types:Amber Clan Tritons",
+        "prefix": "pop-triton_amber_clan",
+        "body": [
+            "46"
+        ]
+    },
+    "poptype nbr-pop-xbow_hvcav": {
+        "description": "table of population types:X-Bow, Hvy Cavalry",
+        "prefix": "pop-xbow_hvcav",
+        "body": [
+            "47"
+        ]
+    },
+    "poptype nbr-pop-mil_ltinf_hvinf1": {
+        "description": "table of population types:Militia, Lt Inf, Hvy Inf",
+        "prefix": "pop-mil_ltinf_hvinf1",
+        "body": [
+            "48"
+        ]
+    },
+    "poptype nbr-pop-mil_ltinf_hvinf2": {
+        "description": "table of population types:Militia, Lt Inf, Hvy Inf",
+        "prefix": "pop-mil_ltinf_hvinf2",
+        "body": [
+            "49"
+        ]
+    },
+    "poptype nbr-pop-mil_ltinf_hvinf3": {
+        "description": "table of population types:Militia, Lt Inf, Hvy Inf",
+        "prefix": "pop-mil_ltinf_hvinf3",
+        "body": [
+            "50"
+        ]
+    },
+    "poptype nbr-pop-mil_ltcav_hvcav1": {
+        "description": "table of population types:Militia, Lt Cav, Hvy Cav",
+        "prefix": "pop-mil_ltcav_hvcav1",
+        "body": [
+            "51"
+        ]
+    },
+    "poptype nbr-pop-mil_ltcav_hvcav2": {
+        "description": "table of population types:Militia, Lt Cav, Hvy Cav",
+        "prefix": "pop-mil_ltcav_hvcav2",
+        "body": [
+            "52"
+        ]
+    },
+    "poptype nbr-pop-mil_ltcav_hvcav3": {
+        "description": "table of population types:Militia, Lt Cav, Hvy Cav",
+        "prefix": "pop-mil_ltcav_hvcav3",
+        "body": [
+            "53"
+        ]
+    },
+    "poptype nbr-pop-hvinf_hvcav1": {
+        "description": "table of population types:Hvy Inf, Hvy Cavalry",
+        "prefix": "pop-hvinf_hvcav1",
+        "body": [
+            "54"
+        ]
+    },
+    "poptype nbr-pop-hvinf_hvcav2": {
+        "description": "table of population types:Hvy Inf, Hvy Cavalry",
+        "prefix": "pop-hvinf_hvcav2",
+        "body": [
+            "55"
+        ]
+    },
+    "poptype nbr-pop-hvinf_hvcav3": {
+        "description": "table of population types:Hvy Inf, Hvy Cavalry",
+        "prefix": "pop-hvinf_hvcav3",
+        "body": [
+            "56"
+        ]
+    },
+    "poptype nbr-pop-shamblers": {
+        "description": "table of population types:Shamblers",
+        "prefix": "pop-shamblers",
+        "body": [
+            "57"
+        ]
+    },
+    "poptype nbr-pop-ltinf_hvinf_xbow": {
+        "description": "table of population types:Lt Inf, Hvy Inf, X-Bow",
+        "prefix": "pop-ltinf_hvinf_xbow",
+        "body": [
+            "58"
+        ]
+    },
+    "poptype nbr-pop-mil_ltinf_arch1": {
+        "description": "table of population types:Militia, Lt Inf, Archers",
+        "prefix": "pop-mil_ltinf_arch1",
+        "body": [
+            "59"
+        ]
+    },
+    "poptype nbr-pop-mil_ltinf_arch2": {
+        "description": "table of population types:Militia, Lt Inf, Archers",
+        "prefix": "pop-mil_ltinf_arch2",
+        "body": [
+            "60"
+        ]
+    },
+    "poptype nbr-pop-vaettir_troll": {
+        "description": "table of population types:Vaettir, Trolls",
+        "prefix": "pop-vaettir_troll",
+        "body": [
+            "61"
+        ]
+    },
+    "poptype nbr-pop-deer_tribe": {
+        "description": "table of population types:Tribals, Deer",
+        "prefix": "pop-deer_tribe",
+        "body": [
+            "62"
+        ]
+    },
+    "poptype nbr-pop-tritons2": {
+        "description": "table of population types:Tritons",
+        "prefix": "pop-tritons2",
+        "body": [
+            "63"
+        ]
+    },
+    "poptype nbr-pop-tritons3": {
+        "description": "table of population types:Tritons",
+        "prefix": "pop-tritons3",
+        "body": [
+            "64"
+        ]
+    },
+    "poptype nbr-pop-ichtyids": {
+        "description": "table of population types:Ichtyids",
+        "prefix": "pop-ichtyids",
+        "body": [
+            "65"
+        ]
+    },
+    "poptype nbr-pop-vaettir": {
+        "description": "table of population types:Vaettir",
+        "prefix": "pop-vaettir",
+        "body": [
+            "66"
+        ]
+    },
+    "poptype nbr-pop-vaettir_dwrf_smith": {
+        "description": "table of population types:Vaettir, Dwarven Smith",
+        "prefix": "pop-vaettir_dwrf_smith",
+        "body": [
+            "67"
+        ]
+    },
+    "poptype nbr-pop-sling_hvinf_eleph": {
+        "description": "table of population types:Slingers, Hvy Inf, Elephants",
+        "prefix": "pop-sling_hvinf_eleph",
+        "body": [
+            "68"
+        ]
+    },
+    "poptype nbr-pop-asmeg": {
+        "description": "table of population types:Asmeg",
+        "prefix": "pop-asmeg",
+        "body": [
+            "69"
+        ]
+    },
+    "poptype nbr-pop-vaettir_svartalf": {
+        "description": "table of population types:Vaettir, Svartalf",
+        "prefix": "pop-vaettir_svartalf",
+        "body": [
+            "70"
+        ]
+    },
+    "poptype nbr-pop-trolls": {
+        "description": "table of population types:Trolls",
+        "prefix": "pop-trolls",
+        "body": [
+            "71"
+        ]
+    },
+    "poptype nbr-pop-mermen": {
+        "description": "table of population types:Mermen",
+        "prefix": "pop-mermen",
+        "body": [
+            "72"
+        ]
+    },
+    "poptype nbr-pop-triton_triton_knight": {
+        "description": "table of population types:Tritons, Triton Knights",
+        "prefix": "pop-triton_triton_knight",
+        "body": [
+            "73"
+        ]
+    },
+    "poptype nbr-pop-ltinf_ltcav_cataph": {
+        "description": "table of population types:Lt Inf, Lt Cav, Cataphracts",
+        "prefix": "pop-ltinf_ltcav_cataph",
+        "body": [
+            "74"
+        ]
+    },
+    "poptype nbr-pop-la_hoburg": {
+        "description": "table of population types:Hoburg, LA",
+        "prefix": "pop-la_hoburg",
+        "body": [
+            "75"
+        ]
+    },
+    "poptype nbr-pop-ea_hoburg": {
+        "description": "table of population types:Hoburg, EA",
+        "prefix": "pop-ea_hoburg",
+        "body": [
+            "76"
+        ]
+    },
+    "poptype nbr-pop-atavi_apes": {
+        "description": "table of population types:Atavi Apes",
+        "prefix": "pop-atavi_apes",
+        "body": [
+            "77"
+        ]
+    },
+    "poptype nbr-pop-wolf_tribe": {
+        "description": "table of population types:Tribals, Wolf",
+        "prefix": "pop-wolf_tribe",
+        "body": [
+            "78"
+        ]
+    },
+    "poptype nbr-pop-bear_tribe": {
+        "description": "table of population types:Tribals, Bear",
+        "prefix": "pop-bear_tribe",
+        "body": [
+            "79"
+        ]
+    },
+    "poptype nbr-pop-lion_tribe": {
+        "description": "table of population types:Tribals, Lion",
+        "prefix": "pop-lion_tribe",
+        "body": [
+            "80"
+        ]
+    },
+    "poptype nbr-pop-pale_ones": {
+        "description": "table of population types:Pale Ones",
+        "prefix": "pop-pale_ones",
+        "body": [
+            "81"
+        ]
+    },
+    "poptype nbr-pop-jaguar_tribe": {
+        "description": "table of population types:Tribals, Jaguar",
+        "prefix": "pop-jaguar_tribe",
+        "body": [
+            "82"
+        ]
+    },
+    "poptype nbr-pop-toad_tribe": {
+        "description": "table of population types:Tribals, Toad",
+        "prefix": "pop-toad_tribe",
+        "body": [
+            "83"
+        ]
+    },
+    "poptype nbr-pop-cavemen": {
+        "description": "table of population types:Cavemen",
+        "prefix": "pop-cavemen",
+        "body": [
+            "84"
+        ]
+    },
+    "poptype nbr-pop-kappa": {
+        "description": "table of population types:Kappa",
+        "prefix": "pop-kappa",
+        "body": [
+            "85"
+        ]
+    },
+    "poptype nbr-pop-bakemono1": {
+        "description": "table of population types:Bakemono",
+        "prefix": "pop-bakemono1",
+        "body": [
+            "86"
+        ]
+    },
+    "poptype nbr-pop-bakemono2": {
+        "description": "table of population types:Bakemono",
+        "prefix": "pop-bakemono2",
+        "body": [
+            "87"
+        ]
+    },
+    "poptype nbr-pop-kooni": {
+        "description": "table of population types:Ko-Oni",
+        "prefix": "pop-kooni",
+        "body": [
+            "88"
+        ]
+    },
+    "poptype nbr-pop-firbolg": {
+        "description": "table of population types:Fir Bolg",
+        "prefix": "pop-firbolg",
+        "body": [
+            "89"
+        ]
+    },
+    "poptype nbr-pop-turtle_tribe_triton": {
+        "description": "table of population types:Turtle Tribe Tritons",
+        "prefix": "pop-turtle_tribe_triton",
+        "body": [
+            "90"
+        ]
+    },
+    "poptype nbr-pop-shard_tribe_triton": {
+        "description": "table of population types:Shark Tribe Tritons",
+        "prefix": "pop-shard_tribe_triton",
+        "body": [
+            "91"
+        ]
+    },
+    "poptype nbr-pop-shard_tribe_riders": {
+        "description": "table of population types:Shark Tribe, Shark Riders",
+        "prefix": "pop-shard_tribe_riders",
+        "body": [
+            "92"
+        ]
+    },
+    "poptype nbr-pop-zotz": {
+        "description": "table of population types:Zotz",
+        "prefix": "pop-zotz",
+        "body": [
+            "93"
+        ]
+    },
+    "poptype nbr-pop-lavaborn": {
+        "description": "table of population types:Lava-born",
+        "prefix": "pop-lavaborn",
+        "body": [
+            "94"
+        ]
+    },
+    "poptype nbr-pop-ichtyid_shaman": {
+        "description": "table of population types:Ichtyid Shaman",
+        "prefix": "pop-ichtyid_shaman",
+        "body": [
+            "95"
+        ]
+    },
+    "poptype nbr-pop-bone_tribe": {
+        "description": "table of population types:Bone Tribe",
+        "prefix": "pop-bone_tribe",
+        "body": [
+            "96"
+        ]
+    },
+    "poptype nbr-pop-merrow": {
+        "description": "table of population types:Merrow",
+        "prefix": "pop-merrow",
+        "body": [
+            "97"
+        ]
+    },
+    "poptype nbr-pop-kulullu": {
+        "description": "table of population types:Kulullu",
+        "prefix": "pop-kulullu",
+        "body": [
+            "98"
+        ]
+    },
+    "fort nbr-fort-palisades": {
+        "description": "table of fort numbers:Palisades",
+        "prefix": "fort-palisades",
+        "body": [
+            "1"
+        ]
+    },
+    "fort nbr-fort-fortress1": {
+        "description": "table of fort numbers:Fortress",
+        "prefix": "fort-fortress1",
+        "body": [
+            "2"
+        ]
+    },
+    "fort nbr-fort-castle1": {
+        "description": "table of fort numbers:Castle",
+        "prefix": "fort-castle1",
+        "body": [
+            "7"
+        ]
+    },
+    "fort nbr-fort-citadel": {
+        "description": "table of fort numbers:Citadel",
+        "prefix": "fort-citadel",
+        "body": [
+            "4"
+        ]
+    },
+    "fort nbr-fort-rock_walls": {
+        "description": "table of fort numbers:Rock Walls",
+        "prefix": "fort-rock_walls",
+        "body": [
+            "5"
+        ]
+    },
+    "fort nbr-fort-fortress2": {
+        "description": "table of fort numbers:Fortress",
+        "prefix": "fort-fortress2",
+        "body": [
+            "6"
+        ]
+    },
+    "fort nbr-fort-castle_bronze_crystal": {
+        "description": "table of fort numbers:Castle of Bronze and Crystal",
+        "prefix": "fort-castle_bronze_crystal",
+        "body": [
+            "8"
+        ]
+    },
+    "fort nbr-fort-kelp_fort": {
+        "description": "table of fort numbers:Kelp Fort",
+        "prefix": "fort-kelp_fort",
+        "body": [
+            "9"
+        ]
+    },
+    "fort nbr-fort-bramble_fort": {
+        "description": "table of fort numbers:Bramble Fort",
+        "prefix": "fort-bramble_fort",
+        "body": [
+            "10"
+        ]
+    },
+    "fort nbr-fort-city_palisades": {
+        "description": "table of fort numbers:City Palisades",
+        "prefix": "fort-city_palisades",
+        "body": [
+            "11"
+        ]
+    },
+    "fort nbr-fort-walled_city": {
+        "description": "table of fort numbers:Walled City",
+        "prefix": "fort-walled_city",
+        "body": [
+            "12"
+        ]
+    },
+    "fort nbr-fort-fortified_city": {
+        "description": "table of fort numbers:Fortified City",
+        "prefix": "fort-fortified_city",
+        "body": [
+            "13"
+        ]
+    },
+    "fort nbr-fort-great_walled_city": {
+        "description": "table of fort numbers:Great Walled City",
+        "prefix": "fort-great_walled_city",
+        "body": [
+            "14"
+        ]
+    },
+    "fort nbr-fort-giant_palisades": {
+        "description": "table of fort numbers:Giant Palisades",
+        "prefix": "fort-giant_palisades",
+        "body": [
+            "15"
+        ]
+    },
+    "fort nbr-fort-giant_fortress": {
+        "description": "table of fort numbers:Giant Fortress",
+        "prefix": "fort-giant_fortress",
+        "body": [
+            "16"
+        ]
+    },
+    "fort nbr-fort-giant_castle": {
+        "description": "table of fort numbers:Giant Castle",
+        "prefix": "fort-giant_castle",
+        "body": [
+            "17"
+        ]
+    },
+    "fort nbr-fort-giant_citadel1": {
+        "description": "table of fort numbers:Giant Citadel",
+        "prefix": "fort-giant_citadel1",
+        "body": [
+            "18"
+        ]
+    },
+    "fort nbr-fort-giant_citadel2": {
+        "description": "table of fort numbers:Grand Citadel",
+        "prefix": "fort-giant_citadel2",
+        "body": [
+            "19"
+        ]
+    },
+    "fort nbr-fort-ice_walls": {
+        "description": "table of fort numbers:Ice Walls",
+        "prefix": "fort-ice_walls",
+        "body": [
+            "20"
+        ]
+    },
+    "fort nbr-fort-ice_fortress": {
+        "description": "table of fort numbers:Ice Fortress",
+        "prefix": "fort-ice_fortress",
+        "body": [
+            "21"
+        ]
+    },
+    "fort nbr-fort-ice_castle": {
+        "description": "table of fort numbers:Ice Castle",
+        "prefix": "fort-ice_castle",
+        "body": [
+            "22"
+        ]
+    },
+    "fort nbr-fort-ice_citadel": {
+        "description": "table of fort numbers:Ice Citadel",
+        "prefix": "fort-ice_citadel",
+        "body": [
+            "23"
+        ]
+    },
+    "fort nbr-fort-wizard_tower": {
+        "description": "table of fort numbers:Wizard’s Tower",
+        "prefix": "fort-wizard_tower",
+        "body": [
+            "24"
+        ]
+    },
+    "fort nbr-fort-citadel_of_power": {
+        "description": "table of fort numbers:Citadel of Power",
+        "prefix": "fort-citadel_of_power",
+        "body": [
+            "25"
+        ]
+    },
+    "fort nbr-fort-fortified_village": {
+        "description": "table of fort numbers:Fortified village",
+        "prefix": "fort-fortified_village",
+        "body": [
+            "27"
+        ]
+    },
+    "fort nbr-fort-wooden_fort": {
+        "description": "table of fort numbers:Wooden Fort",
+        "prefix": "fort-wooden_fort",
+        "body": [
+            "28"
+        ]
+    },
+    "fort nbr-fort-crystal_citadel": {
+        "description": "table of fort numbers:Crystal Citadel",
+        "prefix": "fort-crystal_citadel",
+        "body": [
+            "29"
         ]
     }
 }
