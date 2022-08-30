@@ -129,6 +129,14 @@ if __name__ == "__main__":
             snippets[snippet_name]["prefix"] = snip
             snippets[snippet_name]["body"] = [str(table[snip]["value"])]
 
+    # add custom snippet
+    snippets["Quick add player"] = {}
+    snippets["Quick add player"]["description"] = "Used to quickly add a player to arena map"
+    snippets["Quick add player"]["prefix"] = "Add player"
+    snippets["Quick add player"]["body"] = [
+            "-- ${1:Nation description}\n#allowedplayer ${2:<nation nbr>}\n#specstart ${3:<nation nbr>} ${4:<land nbr>}\n#setland ${5:<land nbr>}\n#commander ${6:<type>}\n#units ${7:<num_units>} ${8:<type>}\n#additem ${9:<item name>}\n#mag_fire ${10:<level>}\n$0"
+    ]
+
     # dump json
     with open(args.output, "w+", encoding="utf8") as f:
         print(f"writing file {args.output}")

@@ -1762,5 +1762,12 @@
         "body": [
             "29"
         ]
+    },
+    "Quick add player": {
+        "description": "Used to quickly add a player to arena map",
+        "prefix": "Add player",
+        "body": [
+            "-- ${1:Nation description}\n#allowedplayer ${2:<nation nbr>}\n#specstart ${3:<nation nbr>} ${4:<land nbr>}\n#setland ${5:<land nbr>}\n#commander ${6:<type>}\n#units ${7:<num_units>} ${8:<type>}\n#additem ${9:<item name>}\n#mag_fire ${10:<level>}\n$0"
+        ]
     }
 }
