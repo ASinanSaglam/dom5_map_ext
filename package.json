@@ -15,15 +15,15 @@
       "Snippets"
   ],
   "activationEvents": [
-    "onCommand:dom5map.helloWorld"
+    "onLanguage:dom5map"
   ],
-  "main": "./extension.js",
+  "main": "./src/extension.js",
   "contributes": {
     "languages": [
       {
           "id": "dom5map",
           "aliases": [
-              "Dom5 map lang"
+              "Dom5 map language"
           ],
           "extensions": [
               ".map"

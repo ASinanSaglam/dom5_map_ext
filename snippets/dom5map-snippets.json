@@ -28,7 +28,7 @@
         ]
     },
     "Basic_Map:#winterimagefile": {
-        "description": "The image file for the winter version of the map. A winter map is not required, but you won’t get any winter look on cold provinces without it. A winter map must have exactly the same size as the normal map.\n",
+        "description": "The image file for the winter version of the map. A winter map is not required, but you won't get any winter look on cold provinces without it. A winter map must have exactly the same size as the normal map.\n",
         "prefix": "#winterimagefile",
         "body": [
             "#winterimagefile ${0:<filename>}"
@@ -45,7 +45,7 @@
         "description": "The description of the map that is shown after selecting a map to play on. Use two newlines to add a new paragraph. Alternatively, use ^ at the end of a line to indicate newline. If you use ^at the beginning of a line, it adds two newlines.\n",
         "prefix": "#description",
         "body": [
-            "#description ${0:“text”}"
+            "#description ${0:\"text\"}"
         ]
     },
     "Basic_Map:#neighbour": {
@@ -73,7 +73,7 @@
         "description": "Sets the name of a specific province.\n",
         "prefix": "#landname",
         "body": [
-            "#landname ${0:<province nbr>} ${1:“name”}"
+            "#landname ${0:<province nbr>} ${1:\"name\"}"
         ]
     },
     "Advanced_Map:#maptextcol": {
@@ -147,7 +147,7 @@
         ]
     },
     "Advanced_Map:#victorycondition": {
-        "description": "The game will end when one player fulfills a special condition, see table Victory Conditions. Dominion score is 11-20 points per converted province, depending on the strength of the dominion. The value of ‘condition’ should be a number from 0 to 6.\n",
+        "description": "The game will end when one player fulfills a special condition, see table Victory Conditions. Dominion score is 11-20 points per converted province, depending on the strength of the dominion. The value of ‘condition' should be a number from 0 to 6.\n",
         "prefix": "#victorycondition",
         "body": [
             "#victorycondition ${0:<condition>} ${1:<attribute>}"
@@ -161,7 +161,7 @@
         ]
     },
     "Start_Locations:#nostart": {
-        "description": "Tags a province as nonstartable. No player will start here when placed at random. This command can also be set from the map editor, which adds 512 to the province’s terrain mask.\n",
+        "description": "Tags a province as nonstartable. No player will start here when placed at random. This command can also be set from the map editor, which adds 512 to the province's terrain mask.\n",
         "prefix": "#nostart",
         "body": [
             "#nostart ${0:<province nbr>}"
@@ -175,7 +175,7 @@
         ]
     },
     "Start_Locations:#teamstart": {
-        "description": "This command can be used in disciple games to force teams to start at certain positions. E.g. to make one team start on one side of the map and the other team on the other side. Team nbr is a value between 0 and number of teams - 1. This value doesn’t correspond to the team number used when creating a game, it’s random which team will get which teamstart position. Use the map editor and press ctrl 0-7 to set up the team positions in an easy way.\n",
+        "description": "This command can be used in disciple games to force teams to start at certain positions. E.g. to make one team start on one side of the map and the other team on the other side. Team nbr is a value between 0 and number of teams - 1. This value doesn't correspond to the team number used when creating a game, it's random which team will get which teamstart position. Use the map editor and press ctrl 0-7 to set up the team positions in an easy way.\n",
         "prefix": "#teamstart",
         "body": [
             "#teamstart ${0:<land nbr>} ${1:<team nbr>}"
@@ -210,31 +210,31 @@
         ]
     },
     "Province_Commands:#feature": {
-        "description": "Puts a specific magic site in the active province. This command can be used a maximum of eight times per province, because that is the maximum number of sites a province can have. Adding unique sites to a map using this command will NOT prevent those sites from appearing randomly, because the map file is only applied to the game map after game setup has done random determination of sites for each province. If the #killfeatures command was not used and all site slots were already filled by randomly determined sites during game setup, this command will be ignored and the site won’t appear. These same limitations apply to the following command:\n",
+        "description": "Puts a specific magic site in the active province. This command can be used a maximum of eight times per province, because that is the maximum number of sites a province can have. Adding unique sites to a map using this command will NOT prevent those sites from appearing randomly, because the map file is only applied to the game map after game setup has done random determination of sites for each province. If the #killfeatures command was not used and all site slots were already filled by randomly determined sites during game setup, this command will be ignored and the site won't appear. These same limitations apply to the following command:\n",
         "prefix": "#feature",
         "body": [
-            "#feature ${0:<site nbr>} ${1:“<site name>”}"
+            "#feature ${0:<site nbr>} ${1:\"<site name>\"}"
         ]
     },
     "Province_Commands:#knownfeature": {
         "description": "Puts a specific magic site in the active province. This site is already found at the start of the game, regardless of its ordinary path level. Using this command prevents special features of the site that depend on its discovery from activating. For example, the magic site Academy of High Magics normally causes a laboratory to be built in the province upon discovery, but if the site is set by this command, the #lab command must be used to add a laboratory to the province. Otherwise the owner of the province must build the laboratory as normal and pay the gold cost.\n",
         "prefix": "#knownfeature",
         "body": [
-            "#knownfeature ${0:<site nbr>} ${1:“<site name>”}"
+            "#knownfeature ${0:<site nbr>} ${1:\"<site name>\"}"
         ]
     },
     "Province_Commands:#temple": {
         "description": "Puts a temple in the active province.\n",
         "prefix": "#temple",
         "body": [
-            "#temple ${0:<site nbr>} ${1:“<site name>”}"
+            "#temple ${0:<site nbr>} ${1:\"<site name>\"}"
         ]
     },
     "Province_Commands:#lab": {
         "description": "Puts a laboratory in the active province.\n",
         "prefix": "#lab",
         "body": [
-            "#lab ${0:<site nbr>} ${1:“<site name>”}"
+            "#lab ${0:<site nbr>} ${1:\"<site name>\"}"
         ]
     },
     "Province_Commands:#unrest": {
@@ -262,14 +262,14 @@
         "description": "Sets the sky (battleground background) to a tga/rgb pic of your choice for fights in the current province. The picture size should be a power of two. 512*512 is a good size.\n",
         "prefix": "#skybox",
         "body": [
-            "#skybox ${0:“<pic.tga>”}"
+            "#skybox ${0:\"<pic.tga>\"}"
         ]
     },
     "Province_Commands:#batmap": {
-        "description": "Sets the battleground that fights take place in for the current province. You can use the special name ’ empty ’ for no battleground, useful for battles in space perhaps. This will affect fights both outside and inside castles.\n",
+        "description": "Sets the battleground that fights take place in for the current province. You can use the special name ' empty ' for no battleground, useful for battles in space perhaps. This will affect fights both outside and inside castles.\n",
         "prefix": "#batmap",
         "body": [
-            "#batmap ${0:“<battlemap.d3m>”}"
+            "#batmap ${0:\"<battlemap.d3m>\"}"
         ]
     },
     "Province_Commands:#groundcol": {
@@ -294,14 +294,14 @@
         ]
     },
     "Province_Commands:#poptype": {
-        "description": "Sets the population type of the active province. This determines which troops may be recruited in the province. Poptype numbers can be found in the large table on the following page. If poptype is set with a number higher than existing poptypes, there will be no units available for recruitment in the province. This command will override the poptype that was randomly assigned to the province during game creation, but it will NOT change the independent defenders, which will be of the poptype this command overwrote. Example: if the randomly determined poptype during game creation was 42 (Jade Amazons) and the poptype has been set to 25 (Barbarians) by this map command, the independent defenders will still be Jade Amazons. You just won’t be able to recruit them. If you want the independent defenders to match the specified poptype, you must set them manually in the map file using the Commander Commands . You should also use the #land command to select the province if you do not want the randomly assigned defenders in addition to the ones you set manually.\n",
+        "description": "Sets the population type of the active province. This determines which troops may be recruited in the province. Poptype numbers can be found in the large table on the following page. If poptype is set with a number higher than existing poptypes, there will be no units available for recruitment in the province. This command will override the poptype that was randomly assigned to the province during game creation, but it will NOT change the independent defenders, which will be of the poptype this command overwrote. Example: if the randomly determined poptype during game creation was 42 (Jade Amazons) and the poptype has been set to 25 (Barbarians) by this map command, the independent defenders will still be Jade Amazons. You just won't be able to recruit them. If you want the independent defenders to match the specified poptype, you must set them manually in the map file using the Commander Commands . You should also use the #land command to select the province if you do not want the randomly assigned defenders in addition to the ones you set manually.\n",
         "prefix": "#poptype",
         "body": [
             "#poptype ${0:<poptype nbr>}"
         ]
     },
     "Province_Commands:#fort": {
-        "description": "Puts a specific fort in the active province. Fort nbr is a number between 1 and 29 and the list of fort numbers can be found in the Fortifications table. Will replace a nation’s default fort if used on a capital location.\n",
+        "description": "Puts a specific fort in the active province. Fort nbr is a number between 1 and 29 and the list of fort numbers can be found in the Fortifications table. Will replace a nation's default fort if used on a capital location.\n",
         "prefix": "#fort",
         "body": [
             "#fort ${0:<fort nbr>}"
@@ -311,28 +311,28 @@
         "description": "Puts one of these commanders in the active province. The commander will have a random name according to its nametype. This commander will be the active commander.\n",
         "prefix": "#commander",
         "body": [
-            "#commander ${0:“<type>”}"
+            "#commander ${0:\"<type>\"}"
         ]
     },
     "Commander:#comname": {
-        "description": "Replaces the active commander’s random name with this one.\n",
+        "description": "Replaces the active commander's random name with this one.\n",
         "prefix": "#comname",
         "body": [
-            "#comname ${0:“<name>”}"
+            "#comname ${0:\"<name>\"}"
         ]
     },
     "Commander:#bodyguards": {
         "description": "Gives bodyguards to the active commander. This command only affects independents. AI nations will ignore this command.\n",
         "prefix": "#bodyguards",
         "body": [
-            "#bodyguards ${0:<nbr>} ${1:“<type>”}"
+            "#bodyguards ${0:<nbr>} ${1:\"<type>\"}"
         ]
     },
     "Commander:#units": {
         "description": "Gives a squad of soldiers to the active commander.\n",
         "prefix": "#units",
         "body": [
-            "#units ${0:<nbr of units>} ${1:“<type>”}"
+            "#units ${0:<nbr of units>} ${1:\"<type>\"}"
         ]
     },
     "Commander:#xp": {
@@ -353,14 +353,14 @@
         "description": "Gives a magic item to active commander. Items cannot currently be assigned by item number.\n",
         "prefix": "#additem",
         "body": [
-            "#additem ${0:“<item name>”}"
+            "#additem ${0:\"<item name>\"}"
         ]
     },
     "Commander:#clearmagic": {
         "description": "Removes all magic skills from the active commander.\n",
         "prefix": "#clearmagic",
         "body": [
-            "#clearmagic ${0:“<item name>”}"
+            "#clearmagic ${0:\"<item name>\"}"
         ]
     },
     "Commander:#mag_fire": {
@@ -430,7 +430,7 @@
         "description": "Forces the god of one nation to be this monster. The god becomes the active commander and can be manipulated with the commander commands.\n",
         "prefix": "#god",
         "body": [
-            "#god ${0:<nation nbr>} ${1:“<type>”}"
+            "#god ${0:<nation nbr>} ${1:\"<type>\"}"
         ]
     },
     "God:#dominionstr": {
@@ -1729,7 +1729,7 @@
         ]
     },
     "fort nbr-fort-wizard_tower": {
-        "description": "table of fort numbers:Wizard’s Tower",
+        "description": "table of fort numbers:Wizard's Tower",
         "prefix": "fort-wizard_tower",
         "body": [
             "24"

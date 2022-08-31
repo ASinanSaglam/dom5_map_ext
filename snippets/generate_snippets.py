@@ -98,12 +98,15 @@ if __name__ == "__main__":
 
             snippet_name = f"{command_type}:{command_name}"
             snippets[snippet_name] = {}
-            snippets[snippet_name]["description"] = snippet_spec[command_type][command_spec][1:]
+            snippets[snippet_name]["description"] = snippet_spec[command_type][command_spec][1:].replace("’", "'")
             snippets[snippet_name]["prefix"] = command_name
             snippets[snippet_name]["body"] = []
             body_str = command_name
             for iarg, arg in enumerate(arg_list):
                 body_str += " ${" 
+                if "“" in arg:
+                    arg = arg.replace("“", '"')
+                    arg = arg.replace("”", '"')
                 body_str += f"{iarg}:{arg}"
                 body_str += "}"
             
@@ -125,7 +128,7 @@ if __name__ == "__main__":
             # snip is the "prefix" and the value is the body
             snippet_name = f"{table_name}-{snip}"
             snippets[snippet_name] = {}
-            snippets[snippet_name]["description"] = f'{table["_desc"]}:{table[snip]["_desc"]}'
+            snippets[snippet_name]["description"] = '{}:{}'.format(table["_desc"], table[snip]["_desc"].replace("’","'"))
             snippets[snippet_name]["prefix"] = snip
             snippets[snippet_name]["body"] = [str(table[snip]["value"])]
 
